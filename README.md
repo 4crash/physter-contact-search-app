@@ -10,6 +10,10 @@ Hello and welcome to eWay-CRM job interview. We are happy to see you playing aro
 
 To be able to run this project on your own computer, you will need [NPM & Node.JS](https://www.npmjs.com/get-npm).
 
+**Recommended:**
+- Node.js v22.x or later
+- npm v10.x or later
+
 ### Duplicate and Run Non-Publicly
 
 To install and run this project on your computer, please create a private repository and [duplicate](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/duplicating-a-repository) this repository to it.
@@ -22,12 +26,28 @@ npm install
 to initialize the project structure and dependencies. Then run
 
 ```
-npm start
+npm run dev
 ```
 
-A new window or tab of you default browser appears and the url is http://localhost:3000. Inside the browser the react web app is running. Feel free to edit the sources and the page will reload as you save the file.
+A new window or tab of your default browser appears and the url is http://localhost:5173. Inside the browser the React web app is running. Feel free to edit the sources and the page will reload as you save the file.
 
 We wish you a happy coding.
+
+### Tech Stack
+
+This project has been updated to use modern development tools:
+
+- **⚡ Vite** - Lightning-fast build tool with HMR (Hot Module Replacement)
+- **⚛️ React 18** - Latest React with concurrent rendering features
+- **🎨 Tailwind CSS** - Utility-first CSS framework for rapid UI development
+- **📘 TypeScript** - Type-safe JavaScript development
+- **🔌 eWay-CRM Connector** - JavaScript library for eWay-CRM API integration
+
+### Available Scripts
+
+- `npm run dev` - Start the Vite development server (default port: 5173)
+- `npm run build` - Build the app for production
+- `npm run preview` - Preview the production build locally
 
 ## Your Goal
 
