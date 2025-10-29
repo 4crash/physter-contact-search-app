@@ -13,7 +13,7 @@ export default function ContactDetailPage() {
 
     const handleRefresh = () => {
         if (!contact) return
-        refreshContact(contact.email, {
+        refreshContact(contact.email1Address, {
             onSuccess: (updated) => {
                 if (updated) {
                     updateContact(updated)
@@ -70,25 +70,25 @@ export default function ContactDetailPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                     <div>
                         <p className="text-slate-600">Contact ID</p>
-                        <p className="font-mono text-slate-900 break-all">{contact.id}</p>
+                        <p className="font-mono text-slate-900 break-all">{contact.itemGUID}</p>
                     </div>
                     <div>
                         <p className="text-slate-600">Email</p>
                         <a
-                            href={`mailto:${contact.email}`}
+                            href={`mailto:${contact.email1Address}`}
                             className="text-blue-600 hover:underline"
                         >
-                            {contact.email}
+                            {contact.email1Address}
                         </a>
                     </div>
-                    {contact.phone && (
+                    {contact.telephoneNumber1 && (
                         <div>
                             <p className="text-slate-600">Phone</p>
                             <a
-                                href={`tel:${contact.phone}`}
+                                href={`tel:${contact.telephoneNumber1}`}
                                 className="text-blue-600 hover:underline"
                             >
-                                {contact.phone}
+                                {contact.telephoneNumber1}
                             </a>
                         </div>
                     )}
@@ -98,12 +98,26 @@ export default function ContactDetailPage() {
                             <p className="text-slate-900">{contact.company}</p>
                         </div>
                     )}
+                    {contact.department && (
+                        <div>
+                            <p className="text-slate-600">Department</p>
+                            <p className="text-slate-900">{contact.department}</p>
+                        </div>
+                    )}
                     <div>
-                        <p className="text-slate-600">Last Updated</p>
+                        <p className="text-slate-600">Last Activity</p>
                         <p className="text-slate-900">
-                            {new Date(contact.lastUpdated).toLocaleString()}
+                            {new Date(contact.lastActivity).toLocaleString()}
                         </p>
                     </div>
+                    {contact.itemChanged && (
+                        <div>
+                            <p className="text-slate-600">Last Modified</p>
+                            <p className="text-slate-900">
+                                {new Date(contact.itemChanged).toLocaleString()}
+                            </p>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

@@ -1,12 +1,38 @@
 import { useEffect, useState } from 'react'
 
 export interface Contact {
-    id: string
-    email: string
-    name: string
-    phone?: string
+    // Mandatory fields
+    itemGUID: string
+    fileAs: string
+    email1Address: string
+    telephoneNumber1: string
+    lastActivity: string
+    profilePicture?: string | null
+    profilePictureHeight?: number
+    profilePictureWidth?: number
+
+    // Address fields (at least one is mandatory)
+    businessAddressStreet?: string
+    businessAddressCity?: string
+    businessAddressState?: string
+    businessAddressPostalCode?: string
+    homeAddressStreet?: string
+    homeAddressCity?: string
+    homeAddressState?: string
+    homeAddressPostalCode?: string
+
+    // Additional optional fields
+    firstName?: string
+    lastName?: string
+    middleName?: string
     company?: string
-    avatar?: string
+    department?: string
+    note?: string
+    webPage?: string
+    itemChanged?: string
+    itemCreated?: string
+
+    // Local app fields
     lastUpdated: number
 }
 
@@ -39,7 +65,7 @@ export function useContactHistory() {
     const addContact = (contact: Contact) => {
         setHistory(prev => {
             // Remove if exists to avoid duplicates
-            const filtered = prev.filter(c => c.id !== contact.id)
+            const filtered = prev.filter(c => c.itemGUID !== contact.itemGUID)
             // Add to top with updated timestamp
             return [{ ...contact, lastUpdated: Date.now() }, ...filtered]
         })
@@ -47,16 +73,16 @@ export function useContactHistory() {
 
     const updateContact = (contact: Contact) => {
         setHistory(prev =>
-            prev.map(c => c.id === contact.id ? { ...contact, lastUpdated: Date.now() } : c)
+            prev.map(c => c.itemGUID === contact.itemGUID ? { ...contact, lastUpdated: Date.now() } : c)
         )
     }
 
     const removeContact = (id: string) => {
-        setHistory(prev => prev.filter(c => c.id !== id))
+        setHistory(prev => prev.filter(c => c.itemGUID !== id))
     }
 
     const getContact = (id: string) => {
-        return history.find(c => c.id === id)
+        return history.find(c => c.itemGUID === id)
     }
 
     const clearHistory = () => {
@@ -73,3 +99,4 @@ export function useContactHistory() {
         isLoaded
     }
 }
+

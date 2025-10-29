@@ -10,5 +10,8 @@
     "extends": [
         "react-app",
         "@eway-crm/eslint-config-react"
-    ]
+    ],
+    "rules": {
+        "@typescript-eslint/semi": "off"
+    }
 }

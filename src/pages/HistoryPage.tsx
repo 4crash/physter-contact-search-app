@@ -11,7 +11,7 @@ export default function HistoryPage() {
         refreshContact(email, {
             onSuccess: (updated) => {
                 if (updated) {
-                    updateContact({ ...updated, id: contactId })
+                    updateContact({ ...updated, itemGUID: contactId })
                 }
             },
         })
@@ -56,14 +56,14 @@ export default function HistoryPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {history.map(contact => (
                         <div
-                            key={contact.id}
+                            key={contact.itemGUID}
                             className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition"
                         >
                             <div className="flex items-start gap-4 mb-4">
-                                {contact.avatar ? (
+                                {contact.profilePicture ? (
                                     <img
-                                        src={contact.avatar}
-                                        alt={contact.name}
+                                        src={contact.profilePicture}
+                                        alt={contact.fileAs}
                                         className="w-12 h-12 rounded-full object-cover flex-shrink-0"
                                         onError={(e) => {
                                             (e.target as HTMLImageElement).style.display = 'none'
@@ -72,16 +72,16 @@ export default function HistoryPage() {
                                 ) : (
                                     <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center flex-shrink-0">
                                         <span className="text-lg font-bold text-white">
-                                            {contact.name.charAt(0).toUpperCase()}
+                                            {contact.fileAs.charAt(0).toUpperCase()}
                                         </span>
                                     </div>
                                 )}
                                 <div className="flex-1 min-w-0">
                                     <h3 className="font-bold text-slate-900 truncate">
-                                        {contact.name}
+                                        {contact.fileAs}
                                     </h3>
                                     <p className="text-xs text-slate-500 truncate">
-                                        {contact.email}
+                                        {contact.email1Address}
                                     </p>
                                 </div>
                             </div>
@@ -92,26 +92,26 @@ export default function HistoryPage() {
                                 </p>
                             )}
 
-                            {contact.phone && (
+                            {contact.telephoneNumber1 && (
                                 <p className="text-sm text-slate-600 mb-3">
-                                    <span className="font-medium">Phone:</span> {contact.phone}
+                                    <span className="font-medium">Phone:</span> {contact.telephoneNumber1}
                                 </p>
                             )}
 
                             <p className="text-xs text-slate-500 mb-4">
-                                Updated: {new Date(contact.lastUpdated).toLocaleDateString()}
+                                Updated: {new Date(contact.lastActivity).toLocaleDateString()}
                             </p>
 
                             <div className="flex gap-2">
                                 <button
-                                    onClick={() => navigate(`/contact/${contact.id}`)}
+                                    onClick={() => navigate(`/contact/${contact.itemGUID}`)}
                                     className="flex-1 px-3 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition font-medium"
                                 >
                                     View
                                 </button>
                                 <button
-                                    onClick={() => handleRefreshContact(contact.email, contact.id)}
-                                    disabled={isRefreshing(contact.id)}
+                                    onClick={() => handleRefreshContact(contact.email1Address, contact.itemGUID)}
+                                    disabled={isRefreshing(contact.itemGUID)}
                                     className="flex-1 px-3 py-2 bg-slate-200 text-slate-900 text-sm rounded-lg hover:bg-slate-300 disabled:bg-slate-100 transition font-medium"
                                 >
                                     {isRefreshing(contact.id) ? '...' : 'Refresh'}

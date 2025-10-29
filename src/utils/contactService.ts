@@ -2,6 +2,66 @@ import connection from '../eWayAPI/Connector'
 import { Contact } from '../hooks/useContactHistory'
 
 /**
+ * Map eWay-CRM API response to Contact interface
+ */
+function mapApiResponseToContact(data: any, searchEmail: string): Contact {
+    // Build address string from business or home address
+    const buildAddress = () => {
+        const parts = []
+        if (data.BusinessAddressStreet) parts.push(data.BusinessAddressStreet)
+        if (data.BusinessAddressCity) parts.push(data.BusinessAddressCity)
+        if (data.BusinessAddressState) parts.push(data.BusinessAddressState)
+        if (data.BusinessAddressPostalCode) parts.push(data.BusinessAddressPostalCode)
+
+        if (parts.length === 0) {
+            // Fallback to home address if business address is empty
+            if (data.HomeAddressStreet) parts.push(data.HomeAddressStreet)
+            if (data.HomeAddressCity) parts.push(data.HomeAddressCity)
+            if (data.HomeAddressState) parts.push(data.HomeAddressState)
+            if (data.HomeAddressPostalCode) parts.push(data.HomeAddressPostalCode)
+        }
+
+        return parts.length > 0 ? parts.join(', ') : undefined
+    }
+
+    return {
+        // Mandatory fields
+        itemGUID: data.ItemGUID,
+        fileAs: data.FileAs || `${data.FirstName || ''} ${data.LastName || ''}`.trim() || 'Unknown',
+        email1Address: searchEmail || data.Email1Address || '',
+        telephoneNumber1: data.TelephoneNumber1 || data.TelephoneNumber2 || '',
+        lastActivity: data.LastActivity || new Date().toISOString(),
+        profilePicture: data.ProfilePicture || null,
+        profilePictureHeight: data.ProfilePictureHeight,
+        profilePictureWidth: data.ProfilePictureWidth,
+
+        // Address fields
+        businessAddressStreet: data.BusinessAddressStreet,
+        businessAddressCity: data.BusinessAddressCity,
+        businessAddressState: data.BusinessAddressState,
+        businessAddressPostalCode: data.BusinessAddressPostalCode,
+        homeAddressStreet: data.HomeAddressStreet,
+        homeAddressCity: data.HomeAddressCity,
+        homeAddressState: data.HomeAddressState,
+        homeAddressPostalCode: data.HomeAddressPostalCode,
+
+        // Additional optional fields
+        firstName: data.FirstName,
+        lastName: data.LastName,
+        middleName: data.MiddleName,
+        company: data.Company,
+        department: data.Department,
+        note: data.Note,
+        webPage: data.WebPage,
+        itemChanged: data.ItemChanged,
+        itemCreated: data.ItemCreated,
+
+        // Local app field
+        lastUpdated: Date.now()
+    }
+}
+
+/**
  * Search for a contact by email using eWay-CRM API
  * @param email - Email address to search for
  * @returns Promise with Contact data or null if not found
@@ -19,16 +79,8 @@ export async function searchContactByEmail(email: string): Promise<Contact | nul
                 },
                 (result: any) => {
                     if (result && result.Data && result.Data.length > 0) {
-                        const data = result.Data[0]
-                        const contact: Contact = {
-                            id: data.Id || `contact-${Date.now()}`,
-                            email: email,
-                            name: data.FileAs || data.FirstName || 'Unknown',
-                            phone: data.Phone1 || data.MobilePhone || undefined,
-                            company: data.Company || undefined,
-                            avatar: data.Photo || undefined,
-                            lastUpdated: Date.now()
-                        }
+                        const apiData = result.Data[0]
+                        const contact = mapApiResponseToContact(apiData, email)
                         resolve(contact)
                     } else {
                         resolve(null)
