@@ -1,25 +1,20 @@
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useContactHistory } from '../hooks/useContactHistory'
-import { searchContactByEmail } from '../utils/contactService'
+import { useRefreshContact } from '../hooks/useContactQuery'
 
 export default function HistoryPage() {
     const navigate = useNavigate()
     const { history, removeContact, updateContact, clearHistory } = useContactHistory()
-    const [refreshing, setRefreshing] = useState<string | null>(null)
+    const { mutate: refreshContact, isPending, variables } = useRefreshContact()
 
-    const handleRefreshContact = async (email: string, contactId: string) => {
-        setRefreshing(contactId)
-        try {
-            const updated = await searchContactByEmail(email)
-            if (updated) {
-                updateContact({ ...updated, id: contactId })
-            }
-        } catch (err) {
-            console.error('Failed to refresh contact:', err)
-        } finally {
-            setRefreshing(null)
-        }
+    const handleRefreshContact = (email: string, contactId: string) => {
+        refreshContact(email, {
+            onSuccess: (updated) => {
+                if (updated) {
+                    updateContact({ ...updated, id: contactId })
+                }
+            },
+        })
     }
 
     const handleClearHistory = () => {
@@ -27,6 +22,8 @@ export default function HistoryPage() {
             clearHistory()
         }
     }
+
+    const isRefreshing = (contactId: string) => isPending && variables === contactId
 
     return (
         <div className="space-y-6">
@@ -114,10 +111,10 @@ export default function HistoryPage() {
                                 </button>
                                 <button
                                     onClick={() => handleRefreshContact(contact.email, contact.id)}
-                                    disabled={refreshing === contact.id}
+                                    disabled={isRefreshing(contact.id)}
                                     className="flex-1 px-3 py-2 bg-slate-200 text-slate-900 text-sm rounded-lg hover:bg-slate-300 disabled:bg-slate-100 transition font-medium"
                                 >
-                                    {refreshing === contact.id ? '...' : 'Refresh'}
+                                    {isRefreshing(contact.id) ? '...' : 'Refresh'}
                                 </button>
                                 <button
                                     onClick={() => removeContact(contact.id)}

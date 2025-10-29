@@ -13,16 +13,16 @@ export default function Layout() {
                                 alt="eWay-CRM"
                                 className="h-8"
                             />
-                            <span className="font-bold text-lg hidden sm:inline text-slate-900">
+                            <span className="font-bold text-2xl hidden sm:inline text-slate-900">
                                 Contact Finder
                             </span>
                         </Link>
 
-                        <ul className="flex items-center gap-6">
+                        <ul className="flex items-center gap-8">
                             <li>
                                 <Link
                                     to="/"
-                                    className="text-slate-600 hover:text-blue-600 font-medium transition"
+                                    className="text-lg text-slate-600 hover:text-blue-600 font-medium transition"
                                 >
                                     Search
                                 </Link>
@@ -30,7 +30,7 @@ export default function Layout() {
                             <li>
                                 <Link
                                     to="/history"
-                                    className="text-slate-600 hover:text-blue-600 font-medium transition"
+                                    className="text-lg text-slate-600 hover:text-blue-600 font-medium transition"
                                 >
                                     History
                                 </Link>
@@ -47,7 +47,7 @@ export default function Layout() {
 
             {/* Footer */}
             <footer className="bg-white border-t border-slate-200 mt-12">
-                <div className="container mx-auto px-4 py-6 text-center text-slate-600 text-sm">
+                <div className="container mx-auto px-4 py-6 text-center text-slate-600 text-base">
                     <p>© 2025 eWay-CRM. All rights reserved.</p>
                 </div>
             </footer>

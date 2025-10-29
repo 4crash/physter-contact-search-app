@@ -1,6 +1,11 @@
 import connection from '../eWayAPI/Connector'
 import { Contact } from '../hooks/useContactHistory'
 
+/**
+ * Search for a contact by email using eWay-CRM API
+ * @param email - Email address to search for
+ * @returns Promise with Contact data or null if not found
+ */
 export async function searchContactByEmail(email: string): Promise<Contact | null> {
     return new Promise((resolve, reject) => {
         try {
@@ -39,7 +44,21 @@ export async function searchContactByEmail(email: string): Promise<Contact | nul
     })
 }
 
+/**
+ * Validate email format
+ * @param email - Email to validate
+ * @returns boolean
+ */
 export function validateEmail(email: string): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     return emailRegex.test(email)
+}
+
+/**
+ * Query key factory for React Query
+ */
+export const contactQueries = {
+    all: () => ['contacts'] as const,
+    search: (email: string) => [...contactQueries.all(), 'search', email] as const,
+    detail: (id: string) => [...contactQueries.all(), 'detail', id] as const,
 }

@@ -2,44 +2,28 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ContactCard from '../components/ContactCard'
 import ContactForm from '../components/ContactForm'
-import { Contact, useContactHistory } from '../hooks/useContactHistory'
-import { searchContactByEmail } from '../utils/contactService'
+import { useContactHistory } from '../hooks/useContactHistory'
+import { useSearchContact } from '../hooks/useContactQuery'
 
 export default function SearchPage() {
     const navigate = useNavigate()
     const { addContact } = useContactHistory()
-    const [currentContact, setCurrentContact] = useState<Contact | null>(null)
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState<string | null>(null)
+    const [searchEmail, setSearchEmail] = useState<string | null>(null)
+    const { data: currentContact, isLoading, error, refetch } = useSearchContact(searchEmail, !!searchEmail)
 
-    const handleSearch = async (email: string) => {
-        setLoading(true)
-        setError(null)
-        setCurrentContact(null)
-
-        try {
-            const contact = await searchContactByEmail(email)
-
-            if (!contact) {
-                setError(`No contact found with email: ${email}`)
-                return
-            }
-
-            setCurrentContact(contact)
-            addContact(contact)
-        } catch (err) {
-            setError(`Error searching contact: ${err instanceof Error ? err.message : 'Unknown error'}`)
-            console.error(err)
-        } finally {
-            setLoading(false)
-        }
+    const handleSearch = (email: string) => {
+        setSearchEmail(email)
     }
 
     const handleViewDetails = () => {
         if (currentContact) {
+            addContact(currentContact)
             navigate(`/contact/${currentContact.id}`)
         }
     }
+
+    const errorMessage = error ? `Error searching contact: ${error instanceof Error ? error.message : 'Unknown error'}` : null
+    const notFoundMessage = !isLoading && searchEmail && !currentContact ? `No contact found with email: ${searchEmail}` : null
 
     return (
         <div className="space-y-6">
@@ -50,12 +34,19 @@ export default function SearchPage() {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div className="lg:col-span-2 space-y-6">
-                    <ContactForm onSearch={handleSearch} loading={loading} />
+                    <ContactForm onSearch={handleSearch} loading={isLoading} />
 
-                    {error && (
+                    {errorMessage && (
                         <div className="bg-red-50 border border-red-200 rounded-lg p-4">
                             <h3 className="text-red-900 font-medium mb-1">Error</h3>
-                            <p className="text-red-800">{error}</p>
+                            <p className="text-red-800">{errorMessage}</p>
+                        </div>
+                    )}
+
+                    {notFoundMessage && (
+                        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                            <h3 className="text-yellow-900 font-medium mb-1">Not Found</h3>
+                            <p className="text-yellow-800">{notFoundMessage}</p>
                         </div>
                     )}
 
@@ -71,7 +62,7 @@ export default function SearchPage() {
                         </div>
                     )}
 
-                    {!currentContact && !loading && !error && (
+                    {!currentContact && !isLoading && !errorMessage && !notFoundMessage && (
                         <div className="bg-slate-100 border border-slate-300 rounded-lg p-8 text-center">
                             <p className="text-slate-600">
                                 Enter an email address above to search for a contact
@@ -89,6 +80,7 @@ export default function SearchPage() {
                             <li>• Contact info is automatically saved to history</li>
                             <li>• Check the History page to see all your searches</li>
                             <li>• Contact data is stored locally in your browser</li>
+                            <li>• Results are cached for faster access</li>
                         </ul>
                     </div>
                 </div>
