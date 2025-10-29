@@ -50,6 +50,9 @@ This project has been updated to use modern development tools:
 - `npm run preview` - Preview the production build locally
 - `npm run lint` - Check code quality with ESLint
 - `npm run lint:fix` - Auto-fix ESLint issues
+- `npm test` - Run Jest test suite once
+- `npm run test:watch` - Run tests in watch mode (re-runs on file changes)
+- `npm run test:coverage` - Generate test coverage report
 
 ## Your Goal
 
@@ -265,5 +268,233 @@ interface Contact {
   - ES6+ JavaScript support
   - localStorage API
   - Fetch API (via eWay-CRM connector)
+
+## Testing
+
+This project uses **Jest** with **React Testing Library** for comprehensive test coverage.
+
+### Test Framework Setup
+
+- **Jest** v30.2.0 - Test runner with TypeScript support
+- **ts-jest** v29.4.5 - TypeScript preprocessor for Jest
+- **@testing-library/react** v14.3.1 - React component testing utilities
+- **@testing-library/jest-dom** v5.17.0 - Custom Jest matchers for DOM
+- **jest-environment-jsdom** v30.2.0 - DOM environment for tests
+
+### Running Tests
+
+```bash
+# Run all tests once
+npm test
+
+# Run tests in watch mode (re-runs on file changes)
+npm run test:watch
+
+# Generate coverage report
+npm run test:coverage
+```
+
+### Test Structure
+
+Tests are organized in `__tests__` directories alongside the code they test:
+
+```
+src/
+├── utils/
+│   └── __tests__/
+│       └── contactService.test.ts       # Utility function tests
+├── hooks/
+│   └── __tests__/
+│       └── useContactHistory.test.ts    # Custom hook tests
+└── components/
+    └── __tests__/
+        ├── ContactAvatar.test.tsx       # Avatar component tests
+        └── ContactForm.test.tsx         # Form component tests
+```
+
+### Test Coverage
+
+| Module | Type | Tests | Coverage |
+|--------|------|-------|----------|
+| contactService.ts | Utility Functions | 6 | Email validation, query factory |
+| useContactHistory.ts | Custom Hook | 13+ | CRUD operations, localStorage |
+| ContactAvatar.tsx | React Component | 10 | Image rendering, fallback avatar |
+| ContactForm.tsx | React Component | 9 | Form validation, submission |
+| **Total** | | **39** | **Comprehensive coverage** |
+
+### Test Categories
+
+#### 1. **Utility Function Tests** (`contactService.test.ts`)
+Tests for utility functions and API integration:
+- ✅ Email validation with various formats
+- ✅ Invalid email detection
+- ✅ Query key factory for caching
+- ✅ Contact search query setup
+- ✅ Contact detail query setup
+
+#### 2. **Custom Hook Tests** (`useContactHistory.test.ts`)
+Tests for React hooks with state and side effects:
+- ✅ Hook initialization with empty history
+- ✅ localStorage persistence on mount
+- ✅ Adding contacts (add/update behavior)
+- ✅ Removing contacts by ID
+- ✅ Retrieving specific contacts
+- ✅ Clearing entire history
+- ✅ Duplicate prevention (update existing)
+- ✅ Timestamp updates on re-add
+- ✅ Multiple contact management
+- ✅ Serialization/deserialization
+
+#### 3. **Component Tests**
+
+**ContactAvatar.test.tsx** - Avatar display component:
+- ✅ Profile picture rendering with correct styling
+- ✅ Fallback avatar with initials for null pictures
+- ✅ First character extraction from name
+- ✅ Empty name handling
+- ✅ Raw Base64 to data URL conversion
+- ✅ Correct alt text for accessibility
+- ✅ Custom className prop support
+- ✅ Gradient background styling
+- ✅ White text color in avatar
+- ✅ Responsive sizing (w-12 h-12)
+
+**ContactForm.test.tsx** - Search form component:
+- ✅ Email input field rendering
+- ✅ Submit button rendering
+- ✅ Form submission with email value
+- ✅ Button disabled state while loading
+- ✅ Button enabled state when not loading
+- ✅ Form submission via Enter key
+- ✅ Invalid email format rejection
+- ✅ Empty email rejection
+- ✅ Whitespace trimming from input
+
+### Writing New Tests
+
+#### Test Utilities
+
+```typescript
+// Mock Contact Factory
+function createMockContact(overrides?: Partial<Contact>): Contact {
+    return {
+        itemGUID: 'guid-123',
+        fileAs: 'John Doe',
+        email1Address: 'john@example.com',
+        telephoneNumber1: '123-456-7890',
+        lastActivity: new Date().toISOString(),
+        lastUpdated: Date.now(),
+        ...overrides
+    }
+}
+```
+
+#### Testing a Component
+
+```typescript
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import ContactForm from '../ContactForm'
+
+describe('ContactForm', () => {
+    it('should call onSearch with email on submit', async () => {
+        const mockOnSearch = jest.fn()
+        const user = userEvent.setup()
+
+        render(<ContactForm onSearch={mockOnSearch} loading={false} />)
+
+        const input = screen.getByPlaceholderText('contact@example.com')
+        await user.type(input, 'test@example.com')
+        await user.click(screen.getByRole('button', { name: /search/i }))
+
+        expect(mockOnSearch).toHaveBeenCalledWith('test@example.com')
+    })
+})
+```
+
+#### Testing a Hook
+
+```typescript
+import { renderHook, act } from '@testing-library/react'
+import { useContactHistory } from '../useContactHistory'
+
+describe('useContactHistory', () => {
+    it('should add contact to history', () => {
+        const { result } = renderHook(() => useContactHistory())
+        const contact = createMockContact()
+
+        act(() => {
+            result.current.addContact(contact)
+        })
+
+        expect(result.current.history).toHaveLength(1)
+        expect(result.current.history[0]).toEqual(contact)
+    })
+})
+```
+
+### Key Testing Patterns
+
+1. **User Interactions**
+   - Use `userEvent` for realistic user behavior
+   - Always `await` async operations
+   - Use `screen` to query rendered elements by user-visible text
+
+2. **State Testing**
+   - Wrap state updates in `act()` for hooks
+   - Test initial state and state changes
+   - Verify side effects (localStorage, API calls)
+
+3. **Mocking**
+   - Mock API responses with jest.fn()
+   - Mock localStorage in setupTests.ts
+   - Mock user events with userEvent.setup()
+
+4. **Accessibility**
+   - Use semantic queries (getByRole, getByLabelText)
+   - Test alt text for images
+   - Verify button and form states
+
+### Configuration Files
+
+**jest.config.js** - Jest configuration:
+- TypeScript support via ts-jest
+- jsdom environment for DOM testing
+- CSS module mocking
+- Coverage thresholds (60% globally)
+
+**src/setupTests.ts** - Test environment setup:
+- @testing-library/jest-dom import for custom matchers
+- localStorage mock for persistence testing
+- act() warning suppression (expected in React 18 + userEvent)
+
+### Test Execution Output
+
+When you run `npm test`, you'll see output like:
+
+```
+ PASS  src/utils/__tests__/contactService.test.ts
+ PASS  src/hooks/__tests__/useContactHistory.test.ts
+ PASS  src/components/__tests__/ContactAvatar.test.tsx
+ PASS  src/components/__tests__/ContactForm.test.tsx
+
+Test Suites: 4 passed, 4 total
+Tests:       39 passed, 39 total
+Time:        ~5 seconds
+```
+
+### Troubleshooting Tests
+
+**Issue: "localStorage is not defined"**
+- Solution: localStorage is mocked in setupTests.ts for all tests
+
+**Issue: "act() warning in console"**
+- Solution: This is expected with React 18 + userEvent. The warning is suppressed in setupTests.ts
+
+**Issue: Test fails with timing issue**
+- Solution: Use `userEvent.setup()` and `await` all async operations
+
+**Issue: Component not found in tests**
+- Solution: Verify component path in import matches actual file location (case-sensitive on Linux/Mac)
 
 
