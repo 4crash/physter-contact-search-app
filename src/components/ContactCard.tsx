@@ -1,7 +1,7 @@
-import { Contact } from '../hooks/useContactHistory'
+import type { Contact } from '../hooks/useContactHistory';
 
 interface ContactCardProps {
-    contact: Contact
+    contact: Contact;
 }
 
 export default function ContactCard({ contact }: ContactCardProps) {
@@ -32,7 +32,7 @@ export default function ContactCard({ contact }: ContactCardProps) {
     return (
         <div className="bg-white rounded-lg shadow-md p-8">
             <div className="flex flex-col sm:flex-row items-start gap-6">
-                {contact.profilePicture && (
+                {contact.profilePicture ? (
                     <img
                         src={contact.profilePicture}
                         alt={contact.fileAs}
@@ -43,6 +43,12 @@ export default function ContactCard({ contact }: ContactCardProps) {
                             (e.target as HTMLImageElement).style.display = 'none'
                         }}
                     />
+                ) : (
+                    <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center flex-shrink-0">
+                        <span className="text-3xl font-bold text-white">
+                            {getInitials()}
+                        </span>
+                    </div>
                 )}
 
                 <div className="flex-1">

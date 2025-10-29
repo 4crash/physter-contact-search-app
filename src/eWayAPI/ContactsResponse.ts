@@ -1,7 +1,7 @@
-import { IApiResult } from "@eway-crm/connector";
+import type { IApiResult } from "@eway-crm/connector";
 
 export type TContactsResopnse = IApiResult & {
-    Data: TContact[]
+    Data: TContact[];
 };
 
 export type TContact = {

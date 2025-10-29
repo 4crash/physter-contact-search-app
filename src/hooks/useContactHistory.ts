@@ -1,39 +1,39 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 
 export interface Contact {
     // Mandatory fields
-    itemGUID: string
-    fileAs: string
-    email1Address: string
-    telephoneNumber1: string
-    lastActivity: string
-    profilePicture?: string | null
-    profilePictureHeight?: number
-    profilePictureWidth?: number
+    itemGUID: string;
+    fileAs: string;
+    email1Address: string;
+    telephoneNumber1: string;
+    lastActivity: string;
+    profilePicture?: string | null;
+    profilePictureHeight?: number;
+    profilePictureWidth?: number;
 
     // Address fields (at least one is mandatory)
-    businessAddressStreet?: string
-    businessAddressCity?: string
-    businessAddressState?: string
-    businessAddressPostalCode?: string
-    homeAddressStreet?: string
-    homeAddressCity?: string
-    homeAddressState?: string
-    homeAddressPostalCode?: string
+    businessAddressStreet?: string;
+    businessAddressCity?: string;
+    businessAddressState?: string;
+    businessAddressPostalCode?: string;
+    homeAddressStreet?: string;
+    homeAddressCity?: string;
+    homeAddressState?: string;
+    homeAddressPostalCode?: string;
 
     // Additional optional fields
-    firstName?: string
-    lastName?: string
-    middleName?: string
-    company?: string
-    department?: string
-    note?: string
-    webPage?: string
-    itemChanged?: string
-    itemCreated?: string
+    firstName?: string;
+    lastName?: string;
+    middleName?: string;
+    company?: string;
+    department?: string;
+    note?: string;
+    webPage?: string;
+    itemChanged?: string;
+    itemCreated?: string;
 
     // Local app fields
-    lastUpdated: number
+    lastUpdated: number;
 }
 
 const STORAGE_KEY = 'contact_history'
@@ -47,7 +47,7 @@ export function useContactHistory() {
         const saved = localStorage.getItem(STORAGE_KEY)
         if (saved) {
             try {
-                setHistory(JSON.parse(saved))
+                setHistory(JSON.parse(saved) as Contact[])
             } catch (err) {
                 console.error('Failed to parse contact history:', err)
             }

@@ -51,7 +51,7 @@ export function useRefreshContact() {
                     contact
                 )
                 queryClient.setQueryData(
-                    contactQueries.detail(contact.id),
+                    contactQueries.detail(contact.itemGUID),
                     contact
                 )
             }

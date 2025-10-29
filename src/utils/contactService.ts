@@ -1,5 +1,5 @@
 import connection from '../eWayAPI/Connector'
-import { Contact } from '../hooks/useContactHistory'
+import type { Contact } from '../hooks/useContactHistory'
 
 /**
  * Map eWay-CRM API response to Contact interface

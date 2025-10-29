@@ -8,11 +8,18 @@ export default function HistoryPage() {
     const { mutate: refreshContact, isPending, variables } = useRefreshContact()
 
     const handleRefreshContact = (email: string, contactId: string) => {
+
         refreshContact(email, {
+
             onSuccess: (updated) => {
                 if (updated) {
                     updateContact({ ...updated, itemGUID: contactId })
                 }
+                console.log('Refreshed contact:', updated)
+            },
+            onError: (error) => {
+                console.error('Failed to refresh contact:', error)
+
             },
         })
     }
@@ -114,10 +121,10 @@ export default function HistoryPage() {
                                     disabled={isRefreshing(contact.itemGUID)}
                                     className="flex-1 px-3 py-2 bg-slate-200 text-slate-900 text-sm rounded-lg hover:bg-slate-300 disabled:bg-slate-100 transition font-medium"
                                 >
-                                    {isRefreshing(contact.id) ? '...' : 'Refresh'}
+                                    {isRefreshing(contact.itemGUID) ? '...' : 'Refresh'}
                                 </button>
                                 <button
-                                    onClick={() => removeContact(contact.id)}
+                                    onClick={() => removeContact(contact.itemGUID)}
                                     className="flex-1 px-3 py-2 bg-red-100 text-red-600 text-sm rounded-lg hover:bg-red-200 transition font-medium"
                                 >
                                     Remove

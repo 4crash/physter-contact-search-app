@@ -72,26 +72,8 @@ export default function ContactDetailPage() {
                         <p className="text-slate-600">Contact ID</p>
                         <p className="font-mono text-slate-900 break-all">{contact.itemGUID}</p>
                     </div>
-                    <div>
-                        <p className="text-slate-600">Email</p>
-                        <a
-                            href={`mailto:${contact.email1Address}`}
-                            className="text-blue-600 hover:underline"
-                        >
-                            {contact.email1Address}
-                        </a>
-                    </div>
-                    {contact.telephoneNumber1 && (
-                        <div>
-                            <p className="text-slate-600">Phone</p>
-                            <a
-                                href={`tel:${contact.telephoneNumber1}`}
-                                className="text-blue-600 hover:underline"
-                            >
-                                {contact.telephoneNumber1}
-                            </a>
-                        </div>
-                    )}
+
+
                     {contact.company && (
                         <div>
                             <p className="text-slate-600">Company</p>
@@ -104,12 +86,7 @@ export default function ContactDetailPage() {
                             <p className="text-slate-900">{contact.department}</p>
                         </div>
                     )}
-                    <div>
-                        <p className="text-slate-600">Last Activity</p>
-                        <p className="text-slate-900">
-                            {new Date(contact.lastActivity).toLocaleString()}
-                        </p>
-                    </div>
+
                     {contact.itemChanged && (
                         <div>
                             <p className="text-slate-600">Last Modified</p>
