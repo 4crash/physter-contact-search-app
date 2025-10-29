@@ -52,4 +52,4 @@ export default function ContactAvatar({ profilePicture, fileAs, className }: Con
             )}
         </div>
     )
-};
+}

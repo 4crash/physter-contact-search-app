@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ContactCard from '../components/ContactCard'
 import ContactForm from '../components/ContactForm'
@@ -8,13 +8,15 @@ import { useSearchContact } from '../hooks/useContactQuery'
 export default function SearchPage() {
     const navigate = useNavigate()
     const { addContact } = useContactHistory()
+    const addContactRef = useRef(addContact)
+
     const [searchEmail, setSearchEmail] = useState<string | null>(null)
     const { data: currentContact, isLoading, error } = useSearchContact(searchEmail, !!searchEmail)
 
     // Auto-add contact to history when successfully loaded
     useEffect(() => {
         if (currentContact && !error && !isLoading) {
-            addContact(currentContact)
+            addContactRef.current(currentContact);
         }
     }, [currentContact, error, isLoading])
 

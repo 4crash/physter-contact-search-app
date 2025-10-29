@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { validateEmail } from '../utils/contactService'
 
 interface ContactFormProps {
-    onSearch: (email: string) => void
-    loading: boolean
+    onSearch: (email: string) => void;
+    loading: boolean;
 }
 
 export default function ContactForm({ onSearch, loading }: ContactFormProps) {

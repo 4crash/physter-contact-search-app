@@ -1,10 +1,50 @@
-import connection from '../eWayAPI/Connector'
-import type { Contact } from '../hooks/useContactHistory'
+import type { IApiResult } from '@eway-crm/connector';
+import connection from '../eWayAPI/Connector';
+import type { Contact } from '../hooks/useContactHistory';
+
+/**
+ * eWay-CRM API contact data structure
+ */
+interface EWayApiContactData extends Record<string, unknown> {
+    ItemGUID: string;
+    FileAs?: string;
+    FirstName?: string;
+    LastName?: string;
+    Email1Address?: string;
+    TelephoneNumber1?: string;
+    TelephoneNumber2?: string;
+    LastActivity?: string;
+    ProfilePicture?: string | null;
+    ProfilePictureHeight?: number;
+    ProfilePictureWidth?: number;
+    BusinessAddressStreet?: string;
+    BusinessAddressCity?: string;
+    BusinessAddressState?: string;
+    BusinessAddressPostalCode?: string;
+    HomeAddressStreet?: string;
+    HomeAddressCity?: string;
+    HomeAddressState?: string;
+    HomeAddressPostalCode?: string;
+    MiddleName?: string;
+    Company?: string;
+    Department?: string;
+    Note?: string;
+    WebPage?: string;
+    ItemChanged?: string;
+    ItemCreated?: string;
+}
+
+/**
+ * eWay-CRM SearchContacts API response
+ */
+interface EWaySearchResponse extends IApiResult {
+    Data: EWayApiContactData[];
+}
 
 /**
  * Map eWay-CRM API response to Contact interface
  */
-function mapApiResponseToContact(data: any, searchEmail: string): Contact {
+function mapApiResponseToContact(data: EWayApiContactData, searchEmail: string): Contact {
     // Build address string from business or home address
 
 
@@ -61,17 +101,18 @@ export async function searchContactByEmail(email: string): Promise<Contact | nul
                     },
                     includeProfilePictures: true
                 },
-                (result: any) => {
-                    if (result && result.Data && result.Data.length > 0) {
-                        const apiData = result.Data[0]
+                (result: IApiResult) => {
+                    const searchResult = result as EWaySearchResponse
+                    if (searchResult && searchResult.Data && searchResult.Data.length > 0) {
+                        const apiData = searchResult.Data[0]
                         const contact = mapApiResponseToContact(apiData, email)
                         resolve(contact)
                     } else {
                         resolve(null)
                     }
                 },
-                (error: any) => {
-                    reject(error)
+                (error: IApiResult) => {
+                    reject(new Error((error as unknown as Record<string, unknown>).message as string || 'Unknown error'))
                 }
             )
         } catch (error) {
