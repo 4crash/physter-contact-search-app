@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import ContactAvatar from '../components/contactAvatar'
 import { useContactHistory } from '../hooks/useContactHistory'
 import { useRefreshContact } from '../hooks/useContactQuery'
 
@@ -15,7 +16,7 @@ export default function HistoryPage() {
                 if (updated) {
                     updateContact({ ...updated, itemGUID: contactId })
                 }
-                console.log('Refreshed contact:', updated)
+
             },
             onError: (error) => {
                 console.error('Failed to refresh contact:', error)
@@ -30,7 +31,9 @@ export default function HistoryPage() {
         }
     }
 
-    const isRefreshing = (contactId: string) => isPending && variables === contactId
+    const isRefreshing = (contactId: string) => {
+        return isPending && variables === contactId;
+    }
 
     return (
         <div className="space-y-6">
@@ -62,53 +65,44 @@ export default function HistoryPage() {
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {history.map(contact => (
+
                         <div
                             key={contact.itemGUID}
                             className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition"
                         >
-                            <div className="flex items-start gap-4 mb-4">
-                                {contact.profilePicture ? (
-                                    <img
-                                        src={contact.profilePicture}
-                                        alt={contact.fileAs}
-                                        className="w-12 h-12 rounded-full object-cover flex-shrink-0"
-                                        onError={(e) => {
-                                            (e.target as HTMLImageElement).style.display = 'none'
-                                        }}
-                                    />
-                                ) : (
-                                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center flex-shrink-0">
-                                        <span className="text-lg font-bold text-white">
-                                            {contact.fileAs.charAt(0).toUpperCase()}
-                                        </span>
+                            <div className='flex justify-between mb-4'>
+                                <div className="flex-2">
+                                    <div className="flex items-start gap-4 mb-4">
+                                        <div className="flex-1 min-w-0">
+                                            <h3 className="font-bold text-slate-900 truncate">
+                                                {contact.fileAs}
+                                            </h3>
+                                            <p className="text-xs text-slate-500 truncate">
+                                                {contact.email1Address}
+                                            </p>
+                                        </div>
                                     </div>
-                                )}
-                                <div className="flex-1 min-w-0">
-                                    <h3 className="font-bold text-slate-900 truncate">
-                                        {contact.fileAs}
-                                    </h3>
-                                    <p className="text-xs text-slate-500 truncate">
-                                        {contact.email1Address}
+
+                                    {contact.company && (
+                                        <p className="text-sm text-slate-600 mb-3 truncate">
+                                            <span className="font-medium">Company:</span> {contact.company}
+                                        </p>
+                                    )}
+
+                                    {contact.telephoneNumber1 && (
+                                        <p className="text-sm text-slate-600 mb-3">
+                                            <span className="font-medium">Phone:</span> {contact.telephoneNumber1}
+                                        </p>
+                                    )}
+
+                                    <p className="text-xs text-slate-500 mb-4">
+                                        Updated: {new Date(contact.lastActivity).toLocaleDateString()}
                                     </p>
                                 </div>
+                                <div className='flex  '>
+                                    <ContactAvatar profilePicture={contact.profilePicture} fileAs={contact.fileAs} className="w-16 h-16 flex-shrink-0" />
+                                </div>
                             </div>
-
-                            {contact.company && (
-                                <p className="text-sm text-slate-600 mb-3 truncate">
-                                    <span className="font-medium">Company:</span> {contact.company}
-                                </p>
-                            )}
-
-                            {contact.telephoneNumber1 && (
-                                <p className="text-sm text-slate-600 mb-3">
-                                    <span className="font-medium">Phone:</span> {contact.telephoneNumber1}
-                                </p>
-                            )}
-
-                            <p className="text-xs text-slate-500 mb-4">
-                                Updated: {new Date(contact.lastActivity).toLocaleDateString()}
-                            </p>
-
                             <div className="flex gap-2">
                                 <button
                                     onClick={() => navigate(`/contact/${contact.itemGUID}`)}
@@ -118,10 +112,10 @@ export default function HistoryPage() {
                                 </button>
                                 <button
                                     onClick={() => handleRefreshContact(contact.email1Address, contact.itemGUID)}
-                                    disabled={isRefreshing(contact.itemGUID)}
+                                    disabled={isRefreshing(contact.email1Address)}
                                     className="flex-1 px-3 py-2 bg-slate-200 text-slate-900 text-sm rounded-lg hover:bg-slate-300 disabled:bg-slate-100 transition font-medium"
                                 >
-                                    {isRefreshing(contact.itemGUID) ? '...' : 'Refresh'}
+                                    {isRefreshing(contact.email1Address) ? 'Refreshing...' : 'Refresh'}
                                 </button>
                                 <button
                                     onClick={() => removeContact(contact.itemGUID)}

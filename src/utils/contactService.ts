@@ -6,23 +6,7 @@ import type { Contact } from '../hooks/useContactHistory'
  */
 function mapApiResponseToContact(data: any, searchEmail: string): Contact {
     // Build address string from business or home address
-    const buildAddress = () => {
-        const parts = []
-        if (data.BusinessAddressStreet) parts.push(data.BusinessAddressStreet)
-        if (data.BusinessAddressCity) parts.push(data.BusinessAddressCity)
-        if (data.BusinessAddressState) parts.push(data.BusinessAddressState)
-        if (data.BusinessAddressPostalCode) parts.push(data.BusinessAddressPostalCode)
 
-        if (parts.length === 0) {
-            // Fallback to home address if business address is empty
-            if (data.HomeAddressStreet) parts.push(data.HomeAddressStreet)
-            if (data.HomeAddressCity) parts.push(data.HomeAddressCity)
-            if (data.HomeAddressState) parts.push(data.HomeAddressState)
-            if (data.HomeAddressPostalCode) parts.push(data.HomeAddressPostalCode)
-        }
-
-        return parts.length > 0 ? parts.join(', ') : undefined
-    }
 
     return {
         // Mandatory fields
