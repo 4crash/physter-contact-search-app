@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import ContactAvatar from '../components/contactAvatar'
+import ContactAvatar from '../components/ContactAvatar'
 import { useContactHistory } from '../hooks/useContactHistory'
 import { useRefreshContact } from '../hooks/useContactQuery'
 

@@ -1,5 +1,5 @@
 import type { Contact } from '../hooks/useContactHistory';
-import ContactAvatar from './contactAvatar';
+import ContactAvatar from './ContactAvatar';
 
 interface ContactCardProps {
     contact: Contact;

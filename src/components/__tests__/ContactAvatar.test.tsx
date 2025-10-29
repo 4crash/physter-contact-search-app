@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import ContactAvatar from '../contactAvatar'
+import ContactAvatar from '../ContactAvatar'
 
 describe('ContactAvatar', () => {
   it('should render profile picture when provided', () => {
@@ -63,9 +63,9 @@ describe('ContactAvatar', () => {
       />
     )
 
-    const img = screen.getByRole('img', { name: 'Test User' }) as HTMLImageElement
+    const img = screen.getByRole('img', { name: 'Test User' })
     expect(img).toHaveAttribute('src')
-    expect(img.src).toMatch(/^data:image\/jpeg;base64,/)
+    expect((img as HTMLImageElement).src).toMatch(/^data:image\/jpeg;base64,/)
   })
 
   it('should have correct alt text for accessibility', () => {
