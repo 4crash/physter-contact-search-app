@@ -1,11 +1,11 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import ContactCard from '../components/ContactCard'
 import { useContactHistory } from '../hooks/useContactHistory'
 import { useRefreshContact } from '../hooks/useContactQuery'
 
 export default function ContactDetailPage() {
     const { id } = useParams<{ id: string }>()
-    const navigate = useNavigate()
+
     const { getContact, updateContact } = useContactHistory()
     const { mutate: refreshContact, isPending: refreshing } = useRefreshContact()
 
@@ -25,21 +25,21 @@ export default function ContactDetailPage() {
     if (!contact) {
         return (
             <div className="space-y-4">
-                <button
-                    onClick={() => navigate('/')}
+                <Link
+                    to="/"
                     className="px-4 py-2 text-blue-600 hover:text-blue-700 font-medium transition"
                 >
                     ← Back to Search
-                </button>
+                </Link>
                 <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
                     <h2 className="text-red-900 font-bold text-lg mb-2">Contact Not Found</h2>
                     <p className="text-red-800 mb-4">The contact you're looking for is not available.</p>
-                    <button
-                        onClick={() => navigate('/')}
+                    <Link
+                        to='/'
                         className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
                     >
                         Go Back
-                    </button>
+                    </Link>
                 </div>
             </div>
         )
@@ -48,12 +48,12 @@ export default function ContactDetailPage() {
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between">
-                <button
-                    onClick={() => navigate('/')}
+                <Link
+                    to="/"
                     className="px-4 py-2 text-blue-600 hover:text-blue-700 font-medium transition"
                 >
                     ← Back to Search
-                </button>
+                </Link>
                 <button
                     onClick={handleRefresh}
                     disabled={refreshing}
