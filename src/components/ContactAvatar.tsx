@@ -33,23 +33,24 @@ export default function ContactAvatar({ profilePicture, fileAs, className }: Con
     const imageUrl = hasValidImage ? ensureDataUrl(profilePicture) : '';
 
     return (
-        <div className={`${className}`}>
-            {hasValidImage ? (
-                <img
-                    src={imageUrl}
-                    alt={fileAs}
-                    className=" rounded-full object-cover flex-shrink-0"
-                    onError={(e) => {
-                        (e.target as HTMLImageElement).style.display = 'none';
-                    }}
-                />
-            ) : (
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center flex-shrink-0">
-                    <span className="text-lg font-bold text-white">
-                        {fileAs.charAt(0).toUpperCase()}
-                    </span>
-                </div>
-            )}
-        </div>
+        <div className={className}>
+            {
+                hasValidImage ? (
+                    <img
+                        src={imageUrl}
+                        alt={fileAs}
+                        className=" rounded-full object-cover flex-shrink-0"
+                        onError={(e) => {
+                            (e.target as HTMLImageElement).style.display = 'none';
+                        }}
+                    />
+                ) : (
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center flex-shrink-0">
+                        <span className="text-lg font-bold text-white">
+                            {fileAs.charAt(0).toUpperCase()}
+                        </span>
+                    </div>
+                )}
+        </div >
     )
 }

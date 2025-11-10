@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
-
+interface EWaySearchResponse extends IApiResult {
+    Data: EWayApiContactData[];
+}
 export interface Contact {
     // Mandatory fields
     itemGUID: string;
