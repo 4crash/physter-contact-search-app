@@ -3,7 +3,15 @@ import type { Request, Response } from 'express';
 import express from 'express';
 import fs from 'fs';
 import path from 'path';
-import type { PhysterContact } from '../types/contact.js';
+import { fileURLToPath } from 'url';
+import type { PhysterContact } from '../../common/types/contact.js';
+
+const getDir = () => {
+    const __filename = fileURLToPath(import.meta.url);
+    return path.dirname(__filename);
+};
+
+const __dirname = getDir();
 
 const app = express();
 const PORT = process.env.PORT || 3001;

@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import ContactActionButtons from '../components/ContactActionButtons'
 import ContactAvatar from '../components/ContactAvatar'
 import { useContactHistory } from '../hooks/useContactHistory'
 import { useRefreshContact } from '../hooks/useContactQuery'
@@ -68,7 +69,7 @@ export default function HistoryPage() {
 
                         <div
                             key={contact.itemGUID}
-                            className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition"
+                            className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition relative"
                         >
                             <div className='flex justify-between mb-4'>
                                 <div className="flex-2">
@@ -95,7 +96,7 @@ export default function HistoryPage() {
                                         </p>
                                     )}
 
-                                    <p className="text-xs text-slate-500 mb-4">
+                                    <p className="text-xs text-slate-500 mb-8">
                                         Updated: {new Date(contact.lastActivity).toLocaleDateString()}
                                     </p>
                                 </div>
@@ -103,26 +104,14 @@ export default function HistoryPage() {
                                     <ContactAvatar profilePicture={contact.profilePicture} fileAs={contact.fileAs} className="w-16 h-16 flex-shrink-0" />
                                 </div>
                             </div>
-                            <div className="flex gap-2">
-                                <button
-                                    onClick={() => navigate(`/contact/${contact.itemGUID}`)}
-                                    className="flex-1 px-3 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition font-medium"
-                                >
-                                    View
-                                </button>
-                                <button
-                                    onClick={() => handleRefreshContact(contact.email1Address, contact.itemGUID)}
-                                    disabled={isRefreshing(contact.email1Address)}
-                                    className="flex-1 px-3 py-2 bg-slate-200 text-slate-900 text-sm rounded-lg hover:bg-slate-300 disabled:bg-slate-100 transition font-medium"
-                                >
-                                    {isRefreshing(contact.email1Address) ? 'Refreshing...' : 'Refresh'}
-                                </button>
-                                <button
-                                    onClick={() => removeContact(contact.itemGUID)}
-                                    className="flex-1 px-3 py-2 bg-red-100 text-red-600 text-sm rounded-lg hover:bg-red-200 transition font-medium"
-                                >
-                                    Remove
-                                </button>
+                            <div className="flex gap-2 w-full absolute bottom-2 ">
+                                <ContactActionButtons
+                                    itemGUID={contact.itemGUID}
+                                    email={contact.email1Address}
+                                    onRefresh={handleRefreshContact}
+                                    onRemove={removeContact}
+                                    isRefreshing={isRefreshing(contact.email1Address)}
+                                />
                             </div>
                         </div>
                     ))}
