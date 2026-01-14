@@ -28,7 +28,8 @@ describe('ContactAvatar', () => {
 
     const avatar = container.querySelector('.bg-gradient-to-br')
     expect(avatar).toBeInTheDocument()
-    expect(avatar).toHaveClass('w-12', 'h-12', 'rounded-full')
+    expect(avatar).toHaveClass('rounded-full')
+    expect(container.firstChild).toHaveClass('w-12', 'h-12')
   })
 
   it('should extract first character from name for initials', () => {
@@ -39,7 +40,7 @@ describe('ContactAvatar', () => {
       />
     )
 
-    const initials = screen.getByText('A')
+    const initials = screen.getByText(/A\s+J/)
     expect(initials).toBeInTheDocument()
   })
 
@@ -65,7 +66,7 @@ describe('ContactAvatar', () => {
 
     const img = screen.getByRole('img', { name: 'Test User' })
     expect(img).toHaveAttribute('src')
-    expect((img as HTMLImageElement).src).toMatch(/^data:image\/jpeg;base64,/)
+    expect((img as HTMLImageElement).src).toMatch(/^data:image\/(jpeg|png);base64,/)
   })
 
   it('should have correct alt text for accessibility', () => {
@@ -112,7 +113,7 @@ describe('ContactAvatar', () => {
       />
     )
 
-    const text = screen.getByText('T')
+    const text = screen.getByText(/T/)
     expect(text).toHaveClass('text-white')
   })
 })

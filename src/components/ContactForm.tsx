@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { validateEmail } from '../utils/contactService'
+import { useState } from 'react';
+import { validateEmail } from '../utils/contactService';
 
 interface ContactFormProps {
     onSearch: (email: string) => void;
@@ -42,7 +42,7 @@ export default function ContactForm({ onSearch, loading }: ContactFormProps) {
                         setEmail(e.target.value)
                         setEmailError('')
                     }}
-                    placeholder="contact@example.com"
+                    placeholder="ealbares@gmail.com"
                     className="flex-1 px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-slate-100"
                     disabled={loading}
                 />

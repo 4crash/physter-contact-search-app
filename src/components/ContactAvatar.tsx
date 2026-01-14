@@ -25,7 +25,7 @@ function ensureDataUrl(picture: string): string {
     if (picture.startsWith('data:')) return picture;
 
     // Detect if PNG or JPEG based on first few characters if possible, 
-    // or just default to a safe one. raw base64 from eWay is usually jpeg or png.
+    // or just default to a safe one. raw base64 from Physter is usually jpeg or png.
     const prefix = picture.startsWith('iVBORw0KGgo') ? 'image/png' : 'image/jpeg';
 
     // Raw Base64 - add data URL prefix
@@ -50,9 +50,9 @@ export default function ContactAvatar({ profilePicture, fileAs, className }: Con
                     />
                 ) : (
 
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center flex-shrink-0">
+                    <div className="w-full h-full max-w-24 max-h-24 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center flex-shrink-0">
                         <span className="text-lg font-bold text-white">
-                            {fileAs.charAt(0).toUpperCase()}
+                            {fileAs.split(' ').filter(Boolean).map(n => n[0].toUpperCase()).join(' ')}
                         </span>
                     </div>
                 )}

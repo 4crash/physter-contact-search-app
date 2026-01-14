@@ -8,11 +8,9 @@ export default function Layout() {
                 <div className="container mx-auto px-4">
                     <div className="flex items-center justify-between py-4">
                         <Link to="/" className="flex items-center gap-2">
-                            <img
-                                src="https://www.eway-crm.com/wp-content/themes/eway/img/logo_new-new.svg"
-                                alt="eWay-CRM"
-                                className="h-8"
-                            />
+                            <span className="font-bold text-3xl text-blue-600">
+                                <img src="https://www.physter.com/wp-content/uploads/2019/01/logo_HP_186x91.svg" alt="Logo" className="w-46 h-16" />
+                            </span>
                             <span className="font-bold text-2xl hidden sm:inline text-slate-900">
                                 Contact Finder
                             </span>
@@ -48,7 +46,7 @@ export default function Layout() {
             {/* Footer */}
             <footer className="bg-white border-t border-slate-200 mt-12">
                 <div className="container mx-auto px-4 py-6 text-center text-slate-600 text-base">
-                    <p>© 2025 eWay-CRM. All rights reserved.</p>
+                    <p>© 2025 PHYSTER-CRM. All rights reserved.</p>
                 </div>
             </footer>
         </div>

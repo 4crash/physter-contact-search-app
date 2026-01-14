@@ -114,17 +114,11 @@ npm run preview
 ## Node.js Version
 - Current: **v22.20.0** (Latest stable version)
 
-## Known Issues Fixed
-- Fixed React 18 deprecation warning for `ReactDOM.render()`
-- Resolved DNS issues with eWay-CRM API (updated to `free.eway-crm.com`)
-- Fixed Tailwind CSS v4 PostCSS compatibility by using v3
-
 ## Dependencies Summary
 
 ### Runtime Dependencies:
 - React `^18.2.0`
 - React DOM `^18.2.0`
-- @eway-crm/connector `^1.0.243`
 - @fluentui/react `^8.109.7`
 
 ### Development Dependencies:

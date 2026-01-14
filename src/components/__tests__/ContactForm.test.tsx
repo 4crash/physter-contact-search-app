@@ -8,7 +8,7 @@ describe('ContactForm', () => {
 
         render(<ContactForm onSearch={mockOnSearch} loading={false} />)
 
-        const input = screen.getByPlaceholderText('contact@example.com')
+        const input = screen.getByPlaceholderText('ealbares@gmail.com')
         expect(input).toBeInTheDocument()
     })
 
@@ -26,7 +26,7 @@ describe('ContactForm', () => {
 
         render(<ContactForm onSearch={mockOnSearch} loading={false} />)
 
-        const input = screen.getByPlaceholderText('contact@example.com')
+        const input = screen.getByPlaceholderText('ealbares@gmail.com')
 
         await user.type(input, 'test@example.com')
         await user.click(screen.getByRole('button', { name: /search/i }))
@@ -58,7 +58,7 @@ describe('ContactForm', () => {
 
         render(<ContactForm onSearch={mockOnSearch} loading={false} />)
 
-        const input = screen.getByPlaceholderText('contact@example.com')
+        const input = screen.getByPlaceholderText('ealbares@gmail.com')
 
         await user.type(input, 'test@example.com')
         await user.keyboard('{Enter}')
@@ -72,7 +72,7 @@ describe('ContactForm', () => {
 
         render(<ContactForm onSearch={mockOnSearch} loading={false} />)
 
-        const input = screen.getByPlaceholderText('contact@example.com')
+        const input = screen.getByPlaceholderText('ealbares@gmail.com')
 
         await user.type(input, 'invalid-email')
         await user.click(screen.getByRole('button', { name: /search/i }))
@@ -97,7 +97,7 @@ describe('ContactForm', () => {
 
         render(<ContactForm onSearch={mockOnSearch} loading={false} />)
 
-        const input = screen.getByPlaceholderText('contact@example.com')
+        const input = screen.getByPlaceholderText('ealbares@gmail.com')
 
         await user.type(input, '  test@example.com  ')
         await user.click(screen.getByRole('button', { name: /search/i }))

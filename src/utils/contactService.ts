@@ -4,9 +4,9 @@ import type { Contact } from '../hooks/useContactHistory';
 const API_BASE_URL = 'http://localhost:3001';
 
 /**
- * eWay-CRM API contact data structure
+ * Physter API contact data structure
  */
-interface EWayApiContactData extends Record<string, unknown> {
+interface PhysterApiContactData extends Record<string, unknown> {
 
     ItemGUID: string;
     FileAs?: string;
@@ -36,17 +36,11 @@ interface EWayApiContactData extends Record<string, unknown> {
     ItemCreated?: string;
 }
 
-/**
- * eWay-CRM SearchContacts API response
- */
-interface EWaySearchResponse extends IApiResult {
-    Data: EWayApiContactData[];
-}
 
 /**
- * Map eWay-CRM API response to Contact interface
+ * Map Physter API response to Contact interface
  */
-function mapApiResponseToContact(data: EWayApiContactData, searchEmail: string): Contact {
+function mapApiResponseToContact(data: PhysterApiContactData, searchEmail: string): Contact {
     // Build address string from business or home address
 
 

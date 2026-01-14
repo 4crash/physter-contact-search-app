@@ -105,6 +105,7 @@ dist
 
 # Visual Studio stuff
 .vs
+.vscode/*
 
 # Compiled TS
 /lib# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.

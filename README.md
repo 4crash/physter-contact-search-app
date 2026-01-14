@@ -1,8 +1,8 @@
-![eWay-CRM Logo](https://www.eway-crm.com/wp-content/themes/eway/img/logo_new-new.svg)
+![Physter](https://www.Physter.com/wp-content/themes/eway/img/logo_new-new.svg)
 
 # React Sample App (Interview Assignment v2)
 
-Hello and welcome to eWay-CRM job interview. We are happy to see you playing around with our code!
+Hello and welcome to Physter job interview. We are happy to see you playing around with our code!
 
 ## Installation
 
@@ -41,7 +41,7 @@ This project has been updated to use modern development tools:
 - **⚛️ React 18** - Latest React with concurrent rendering features
 - **🎨 Tailwind CSS** - Utility-first CSS framework for rapid UI development
 - **📘 TypeScript** - Type-safe JavaScript development
-- **🔌 eWay-CRM Connector** - JavaScript library for eWay-CRM API integration
+- **🔌 Physter Connector** - JavaScript library for Physter API integration
 
 ### Available Scripts
 
@@ -64,13 +64,13 @@ You should also handle the states, where wrong user input is given or no contact
 
 Second part of the app is a list of previously visited contacts. This list must preserve browser window/tab close and reopen. The user should be able to click the contacts they previously visited and open their business card again. Keep in mind, that contact info including the email address might change over time. If so, you should update the data in the preserverd list. Items in the list must not sync among other users or devices.
 
-The [library for communication with eWay-CRM API](https://github.com/eway-crm/js-lib) is already included.
+The [library for communication with Physter API](https://github.com/Physter/js-lib) is already included.
 
 Feel free to update or add new dependencies. Using the latest React features is welcome.
 
 ## Commit and Push
 
-Once you have your amazing app, commit and [push](https://help.github.com/en/github/using-git/pushing-commits-to-a-remote-repository) the codes to your repo. Give [rstefko](https://github.com/orgs/eway-crm/people/rstefko) and [havri](https://github.com/orgs/eway-crm/people/havri) permissions to your repository.
+Once you have your amazing app, commit and [push](https://help.github.com/en/github/using-git/pushing-commits-to-a-remote-repository) the codes to your repo. Give [rstefko](https://github.com/orgs/Physter/people/rstefko) and [havri](https://github.com/orgs/Physter/people/havri) permissions to your repository.
 
 Let us know when the final revision is pushed (commit/tag/branch). We are looking forward to see your results.
 
@@ -114,7 +114,7 @@ src/
 │   └── contactService.ts       # API integration layer and data transformation
 │
 └── eWayAPI/
-    ├── Connector.ts            # eWay-CRM API connector initialization
+    ├── Connector.ts            # Physter API connector initialization
     └── ContactsResponse.ts     # TypeScript types for API responses
 ```
 
@@ -122,7 +122,7 @@ src/
 
 ### 🔍 Contact Search
 - Search for contacts by email address
-- Real-time API integration with eWay-CRM
+- Real-time API integration with Physter
 - Automatic profile picture display (Base64 encoded images)
 - Fallback gradient avatar with initials when picture unavailable
 
@@ -139,7 +139,7 @@ src/
   - Company and department
   - Business and home addresses
   - Website, notes, activity timestamp
-- Refresh contact data from eWay-CRM API
+- Refresh contact data from Physter API
 - Navigate between search, history, and detail views
 
 ### ⚡ Performance & Caching
@@ -267,7 +267,7 @@ interface Contact {
 - Modern browsers with:
   - ES6+ JavaScript support
   - localStorage API
-  - Fetch API (via eWay-CRM connector)
+  - Fetch API (via Physter connector)
 
 ## Testing
 

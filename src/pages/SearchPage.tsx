@@ -37,7 +37,7 @@ export default function SearchPage() {
         <div className="space-y-6">
             <div>
                 <h1 className="text-4xl font-bold text-slate-900 mb-2">Contact Finder</h1>
-                <p className="text-slate-600">Search for contacts in eWay-CRM and view their details</p>
+                <p className="text-slate-600">Search for contacts in Physter and view their details</p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -89,10 +89,38 @@ export default function SearchPage() {
                             <li>• Check the History page to see all your searches</li>
                             <li>• Contact data is stored locally in your browser</li>
                             <li>• Results are cached for faster access</li>
+                            <li>• Profile pictures are displayed when available</li>
+                            <li>• Sample Emails to try:</li>
+                            <li>
+                                <ul className="list-disc list-inside ml-4">
+                                    <li>
+                                        ealbares@gmail.com
+                                    </li>
+                                    <li>
+                                        kati.rulapaugh@hotmail.com
+                                    </li>
+                                    <li>
+                                        michael.ostrosky@ostrosky.com
+                                    </li>
+                                    <li>
+                                        oliver@hotmail.com
+                                    </li>
+
+                                    <li>
+                                        alice.j@test.com
+                                    </li>
+                                    <li>
+                                        john.doe@example.com
+                                    </li>
+                                    <li>
+                                        jane.smith@royster.com
+                                    </li>
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
