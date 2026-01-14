@@ -1,11 +1,13 @@
-import type { IApiResult } from '@eway-crm/connector';
-import connection from '../eWayAPI/Connector';
+import axios from 'axios';
 import type { Contact } from '../hooks/useContactHistory';
+
+const API_BASE_URL = 'http://localhost:3001';
 
 /**
  * eWay-CRM API contact data structure
  */
 interface EWayApiContactData extends Record<string, unknown> {
+
     ItemGUID: string;
     FileAs?: string;
     FirstName?: string;
@@ -86,39 +88,50 @@ function mapApiResponseToContact(data: EWayApiContactData, searchEmail: string):
 }
 
 /**
- * Search for a contact by email using eWay-CRM API
+ * Search for a contact by email using local Express API
  * @param email - Email address to search for
  * @returns Promise with Contact data or null if not found
  */
 export async function searchContactByEmail(email: string): Promise<Contact | null> {
-    return new Promise((resolve, reject) => {
-        try {
-            connection.callMethod(
-                'SearchContacts',
-                {
-                    transmitObject: {
-                        Email1Address: email
-                    },
-                    includeProfilePictures: true
-                },
-                (result: IApiResult) => {
-                    const searchResult = result as EWaySearchResponse
-                    if (searchResult && searchResult.Data && searchResult.Data.length > 0) {
-                        const apiData = searchResult.Data[0]
-                        const contact = mapApiResponseToContact(apiData, email)
-                        resolve(contact)
-                    } else {
-                        resolve(null)
-                    }
-                },
-                (error: IApiResult) => {
-                    reject(new Error((error as unknown as Record<string, unknown>).message as string || 'Unknown error'))
-                }
-            )
-        } catch (error) {
-            reject(error)
+    try {
+        const response = await axios.get(`${API_BASE_URL}/contacts/search`, {
+            params: { email }
+        });
+
+        const searchResult = response.data;
+        if (searchResult && searchResult.Data && searchResult.Data.length > 0) {
+            const apiData = searchResult.Data[0];
+            return mapApiResponseToContact(apiData, email);
         }
-    })
+        return null;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            throw new Error(error.response?.data?.message || error.message);
+        }
+        throw error;
+    }
+}
+
+/**
+ * Get a contact by GUID using local Express API
+ * @param guid - Contact GUID
+ * @returns Promise with Contact data or null if not found
+ */
+export async function getContactByGuid(guid: string): Promise<Contact | null> {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/contacts/${guid}`);
+        const result = response.data;
+        if (result && result.Data && result.Data.length > 0) {
+            const apiData = result.Data[0];
+            return mapApiResponseToContact(apiData, apiData.Email1Address || '');
+        }
+        return null;
+    } catch (error) {
+        if (axios.isAxiosError(error) && error.response?.status === 404) {
+            return null;
+        }
+        throw error;
+    }
 }
 
 /**

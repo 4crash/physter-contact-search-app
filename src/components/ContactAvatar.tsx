@@ -24,13 +24,17 @@ function ensureDataUrl(picture: string): string {
     // Already a data URL
     if (picture.startsWith('data:')) return picture;
 
-    // Raw Base64 - add data URL prefix (default to JPEG)
-    return `data:image/jpeg;base64,${picture}`;
+    // Detect if PNG or JPEG based on first few characters if possible, 
+    // or just default to a safe one. raw base64 from eWay is usually jpeg or png.
+    const prefix = picture.startsWith('iVBORw0KGgo') ? 'image/png' : 'image/jpeg';
+
+    // Raw Base64 - add data URL prefix
+    return `data:${prefix};base64,${picture}`;
 }
 
 export default function ContactAvatar({ profilePicture, fileAs, className }: ContactAvatarProps) {
-    const hasValidImage = profilePicture && isBase64String(profilePicture);
-    const imageUrl = hasValidImage ? ensureDataUrl(profilePicture) : '';
+    const hasValidImage = !!profilePicture && isBase64String(profilePicture);
+    const imageUrl = hasValidImage ? ensureDataUrl(profilePicture!) : '';
 
     return (
         <div className={className}>
@@ -39,12 +43,13 @@ export default function ContactAvatar({ profilePicture, fileAs, className }: Con
                     <img
                         src={imageUrl}
                         alt={fileAs}
-                        className=" rounded-full object-cover flex-shrink-0"
+                        className="w-full h-full rounded-full object-cover flex-shrink-0"
                         onError={(e) => {
                             (e.target as HTMLImageElement).style.display = 'none';
                         }}
                     />
                 ) : (
+
                     <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center flex-shrink-0">
                         <span className="text-lg font-bold text-white">
                             {fileAs.charAt(0).toUpperCase()}

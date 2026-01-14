@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { contactQueries, searchContactByEmail } from '../utils/contactService'
+import { contactQueries, getContactByGuid, searchContactByEmail } from '../utils/contactService'
 
 /**
  * Hook to search for a contact by email
@@ -27,13 +27,12 @@ export function useGetContact(id: string | null) {
         queryKey: id ? contactQueries.detail(id) : ['contacts', 'detail', null],
         queryFn: () => {
             if (!id) return null
-            // This would fetch from API if you have an endpoint
-            // For now, it will be populated from cache or history
-            return null
+            return getContactByGuid(id)
         },
         enabled: !!id,
     })
 }
+
 
 /**
  * Hook to refresh contact data
