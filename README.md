@@ -31,6 +31,17 @@ npm run dev
 
 A new window or tab of your default browser appears and the url is http://localhost:5173. Inside the browser the React web app is running. Feel free to edit the sources and the page will reload as you save the file.
 
+### Backend Mock Server
+
+The project includes a mock server to provide contact data. To run it:
+
+1. Open a new terminal.
+2. Navigate to the server directory: `cd server`
+3. Install dependencies: `npm install`
+4. Start the server: `npm run dev`
+
+The server will run on `http://localhost:3001`. The frontend is already configured to communicate with this endpoint.
+
 We wish you a happy coding.
 
 ### Tech Stack
@@ -111,12 +122,8 @@ src/
 │   └── useContactQuery.ts      # React Query hooks for API integration and caching
 │
 ├── utils/
-│   └── contactService.ts       # API integration layer and data transformation
-│
-└── eWayAPI/
-    ├── Connector.ts            # Physter API connector initialization
-    └── ContactsResponse.ts     # TypeScript types for API responses
-```
+    └── contactService.ts       # API integration layer and data transformation
+
 
 ## Key Features
 

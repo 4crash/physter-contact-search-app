@@ -23,7 +23,9 @@
   },
   "include": [
     "src",
-    "tests"
-  ],
+    "tests",
+    "common_logic",
+    "server"
+, "common_logic/types"  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

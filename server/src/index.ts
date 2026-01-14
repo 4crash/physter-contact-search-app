@@ -1,7 +1,9 @@
 import cors from 'cors';
-import express, { Request, Response } from 'express';
+import type { Request, Response } from 'express';
+import express from 'express';
 import fs from 'fs';
 import path from 'path';
+import type { PhysterContact } from '../types/contact.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -9,31 +11,9 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
-interface Contact {
-    ItemGUID: string;
-    FileAs?: string;
-    FirstName?: string;
-    LastName?: string;
-    Email1Address?: string;
-    TelephoneNumber1?: string;
-    LastActivity?: string;
-    Company?: string;
-    Department?: string;
-    ProfilePicture?: string;
-    BusinessAddressStreet?: string;
-    BusinessAddressCity?: string;
-
-    BusinessAddressState?: string;
-    BusinessAddressPostalCode?: string;
-    HomeAddressStreet?: string;
-    HomeAddressCity?: string;
-    HomeAddressState?: string;
-    HomeAddressPostalCode?: string;
-}
-
 const DATA_PATH = path.join(__dirname, 'data', 'contacts.json');
 
-const getContacts = (): Contact[] => {
+const getContacts = (): PhysterContact[] => {
     try {
         const data = fs.readFileSync(DATA_PATH, 'utf8');
         return JSON.parse(data);
@@ -83,6 +63,10 @@ app.get('/contacts/:guid', (req: Request, res: Response) => {
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+    app.listen(PORT, () => {
+        console.log(`Server is running on http://localhost:${PORT}`);
+    });
+}
+
+export default app;

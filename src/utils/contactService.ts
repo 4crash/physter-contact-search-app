@@ -1,46 +1,13 @@
 import axios from 'axios';
 import type { Contact } from '../hooks/useContactHistory';
+import type { PhysterContact } from '../types/contact';
 
 const API_BASE_URL = 'http://localhost:3001';
 
 /**
- * Physter API contact data structure
- */
-interface PhysterApiContactData extends Record<string, unknown> {
-
-    ItemGUID: string;
-    FileAs?: string;
-    FirstName?: string;
-    LastName?: string;
-    Email1Address?: string;
-    TelephoneNumber1?: string;
-    TelephoneNumber2?: string;
-    LastActivity?: string;
-    ProfilePicture?: string | null;
-    ProfilePictureHeight?: number;
-    ProfilePictureWidth?: number;
-    BusinessAddressStreet?: string;
-    BusinessAddressCity?: string;
-    BusinessAddressState?: string;
-    BusinessAddressPostalCode?: string;
-    HomeAddressStreet?: string;
-    HomeAddressCity?: string;
-    HomeAddressState?: string;
-    HomeAddressPostalCode?: string;
-    MiddleName?: string;
-    Company?: string;
-    Department?: string;
-    Note?: string;
-    WebPage?: string;
-    ItemChanged?: string;
-    ItemCreated?: string;
-}
-
-
-/**
  * Map Physter API response to Contact interface
  */
-function mapApiResponseToContact(data: PhysterApiContactData, searchEmail: string): Contact {
+function mapApiResponseToContact(data: PhysterContact, searchEmail: string): Contact {
     // Build address string from business or home address
 
 
