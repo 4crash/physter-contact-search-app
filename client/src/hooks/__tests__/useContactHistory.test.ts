@@ -167,14 +167,14 @@ describe('useContactHistory', () => {
             result.current.addContact(contact)
         })
 
-        const firstTimestamp = result.current.history[0].lastUpdated
+        const firstTimestamp = result.current.history[0].lastUpdate
 
         // Add a small delay and re-add the contact
         act(() => {
             result.current.addContact(contact)
         })
 
-        const secondTimestamp = result.current.history[0].lastUpdated
+        const secondTimestamp = result.current.history[0].lastUpdate
         expect(secondTimestamp).toBeGreaterThanOrEqual(firstTimestamp)
     })
 
