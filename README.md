@@ -234,7 +234,7 @@ npm run lint         # Check code quality
 ## 📊 Data Model
 
 ### PhysterContact Interface
-The API includes extra fields due to legacy requirements or in preparation for future updates.
+
 ```typescript
 interface PhysterContact {
   // Required fields
@@ -250,8 +250,7 @@ interface PhysterContact {
   company?: string | null
   department?: string
   profilePicture?: string | null  // Base64 encoded image
-  profilePictureHeight?: number
-  profilePictureWidth?: number
+
   
   // Address fields
   businessAddressStreet?: string

@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
 import ContactCard from '../components/ContactCard'
+import ContactInformation from '../components/ContactInformation'
 import { useContactHistory } from '../hooks/useContactHistory'
 import { useRefreshContact } from '../hooks/useContactQuery'
 
@@ -64,39 +65,9 @@ export default function ContactDetailPage() {
             </div>
 
             <ContactCard contact={contact} />
-
-            <div className="bg-slate-50 border border-slate-200 rounded-lg p-6">
-                <h3 className="font-bold text-slate-900 mb-4">Contact Information</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                    <div>
-                        <p className="text-slate-600">Contact ID</p>
-                        <p className="font-mono text-slate-900 break-all">{contact.itemGuid}</p>
-                    </div>
+            <ContactInformation contact={contact} />
 
 
-                    {contact.company && (
-                        <div>
-                            <p className="text-slate-600">Company</p>
-                            <p className="text-slate-900">{contact.company}</p>
-                        </div>
-                    )}
-                    {contact.department && (
-                        <div>
-                            <p className="text-slate-600">Department</p>
-                            <p className="text-slate-900">{contact.department}</p>
-                        </div>
-                    )}
-
-                    {contact.itemChanged && (
-                        <div>
-                            <p className="text-slate-600">Last Modified</p>
-                            <p className="text-slate-900">
-                                {new Date(contact.itemChanged).toLocaleString()}
-                            </p>
-                        </div>
-                    )}
-                </div>
-            </div>
         </div>
     )
 }

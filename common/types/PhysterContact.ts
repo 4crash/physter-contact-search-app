@@ -8,8 +8,6 @@ export interface PhysterContact {
     telephoneNumber2?: string;
     lastActivity: string;
     profilePicture?: string | null;
-    profilePictureHeight?: number;
-    profilePictureWidth?: number;
     businessAddressStreet?: string;
     businessAddressCity?: string;
     businessAddressState?: string;
