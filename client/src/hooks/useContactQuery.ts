@@ -33,7 +33,6 @@ export function useGetContact(id: string | null) {
     })
 }
 
-
 /**
  * Hook to refresh contact data
  */
@@ -41,16 +40,13 @@ export function useRefreshContact() {
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationFn: (email: string) => searchContactByEmail(email),
-        onSuccess: (contact, email) => {
+        mutationFn: (itemGuid: string) => getContactByGuid(itemGuid),
+        onSuccess: (contact) => {
             if (contact) {
                 // Update the query cache
+
                 queryClient.setQueryData(
-                    contactQueries.search(email),
-                    contact
-                )
-                queryClient.setQueryData(
-                    contactQueries.detail(contact.itemGUID),
+                    contactQueries.detail(contact.itemGuid),
                     contact
                 )
             }

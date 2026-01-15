@@ -9,10 +9,10 @@ describe('Server API', () => {
                 .query({ email: 'john.doe@example.com' });
 
             expect(response.status).toBe(200);
-            expect(response.body.Status).toBe('OK');
-            expect(response.body.Data).toHaveLength(1);
-            expect(response.body.Data[0].Email1Address).toBe('john.doe@example.com');
-            expect(response.body.Data[0].FileAs).toBe('John Doe');
+            expect(response.body.status).toBe('OK');
+            expect(response.body.data).toHaveLength(1);
+            expect(response.body.data[0].email1Address).toBe('john.doe@example.com');
+            expect(response.body.data[0].fileAs).toBe('John Doe');
         });
 
         it('should return an empty data array when email is not found', async () => {
@@ -21,8 +21,8 @@ describe('Server API', () => {
                 .query({ email: 'nonexistent@example.com' });
 
             expect(response.status).toBe(200);
-            expect(response.body.Status).toBe('OK');
-            expect(response.body.Data).toHaveLength(0);
+            expect(response.body.status).toBe('OK');
+            expect(response.body.data).toHaveLength(0);
         });
 
         it('should return 400 when email parameter is missing', async () => {
@@ -39,8 +39,8 @@ describe('Server API', () => {
                 .query({ email: 'JOHN.DOE@EXAMPLE.COM' });
 
             expect(response.status).toBe(200);
-            expect(response.body.Data).toHaveLength(1);
-            expect(response.body.Data[0].Email1Address).toBe('john.doe@example.com');
+            expect(response.body.data).toHaveLength(1);
+            expect(response.body.data[0].email1Address).toBe('john.doe@example.com');
         });
     });
 
@@ -50,9 +50,9 @@ describe('Server API', () => {
             const response = await request(app).get(`/contacts/${guid}`);
 
             expect(response.status).toBe(200);
-            expect(response.body.Status).toBe('OK');
-            expect(response.body.Data).toHaveLength(1);
-            expect(response.body.Data[0].ItemGUID).toBe(guid);
+            expect(response.body.status).toBe('OK');
+            expect(response.body.data).toHaveLength(1);
+            expect(response.body.data[0].itemGuid).toBe(guid);
         });
 
         it('should return 404 for a non-existent GUID', async () => {

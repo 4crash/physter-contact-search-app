@@ -1,45 +1,11 @@
 import { useEffect, useState } from 'react';
+import { PhysterContact } from '../../../common/types/PhysterContact';
 
-export interface Contact {
-    // Mandatory fields
-    itemGUID: string;
-    fileAs: string;
-    email1Address: string;
-    telephoneNumber1: string;
-    lastActivity: string;
-    profilePicture?: string | null;
-    profilePictureHeight?: number;
-    profilePictureWidth?: number;
-
-    // Address fields (at least one is mandatory)
-    businessAddressStreet?: string;
-    businessAddressCity?: string;
-    businessAddressState?: string;
-    businessAddressPostalCode?: string;
-    homeAddressStreet?: string;
-    homeAddressCity?: string;
-    homeAddressState?: string;
-    homeAddressPostalCode?: string;
-
-    // Additional optional fields
-    firstName?: string;
-    lastName?: string;
-    middleName?: string;
-    company?: string;
-    department?: string;
-    note?: string;
-    webPage?: string;
-    itemChanged?: string;
-    itemCreated?: string;
-
-    // Local app fields
-    lastUpdated: number;
-}
 
 const STORAGE_KEY = 'contact_history'
 
 export function useContactHistory() {
-    const [history, setHistory] = useState<Contact[]>([])
+    const [history, setHistory] = useState<PhysterContact[]>([])
     const [isLoaded, setIsLoaded] = useState(false)
 
     // Load history from localStorage on mount
@@ -47,7 +13,7 @@ export function useContactHistory() {
         const saved = localStorage.getItem(STORAGE_KEY)
         if (saved) {
             try {
-                setHistory(JSON.parse(saved) as Contact[])
+                setHistory(JSON.parse(saved) as PhysterContact[])
             } catch (err) {
                 console.error('Failed to parse contact history:', err)
             }
@@ -62,27 +28,27 @@ export function useContactHistory() {
         }
     }, [history, isLoaded])
 
-    const addContact = (contact: Contact) => {
+    const addContact = (contact: PhysterContact) => {
         setHistory(prev => {
             // Remove if exists to avoid duplicates
-            const filtered = prev.filter(c => c.itemGUID !== contact.itemGUID)
+            const filtered = prev.filter(c => c.itemGuid !== contact.itemGuid)
             // Add to top with updated timestamp
             return [{ ...contact, lastUpdated: Date.now() }, ...filtered]
         })
     }
 
-    const updateContact = (contact: Contact) => {
+    const updateContact = (contact: PhysterContact) => {
         setHistory(prev =>
-            prev.map(c => c.itemGUID === contact.itemGUID ? { ...contact, lastUpdated: Date.now() } : c)
+            prev.map(c => c.itemGuid === contact.itemGuid ? { ...contact, lastUpdated: Date.now() } : c)
         )
     }
 
     const removeContact = (id: string) => {
-        setHistory(prev => prev.filter(c => c.itemGUID !== id))
+        setHistory(prev => prev.filter(c => c.itemGuid !== id))
     }
 
     const getContact = (id: string) => {
-        return history.find(c => c.itemGUID === id)
+        return history.find(c => c.itemGuid === id)
     }
 
     const clearHistory = () => {

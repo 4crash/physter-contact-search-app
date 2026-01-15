@@ -1,8 +1,8 @@
-import type { Contact } from '../hooks/useContactHistory';
+import { PhysterContact } from '../../../common/types/PhysterContact';
 import ContactAvatar from './ContactAvatar';
 
 interface ContactCardProps {
-    contact: Contact;
+    contact: PhysterContact;
 }
 
 export default function ContactCard({ contact }: ContactCardProps) {
@@ -22,8 +22,6 @@ export default function ContactCard({ contact }: ContactCardProps) {
 
         return parts.join(', ')
     }
-
-
 
     return (
         <div className="bg-white rounded-lg shadow-md p-8">

@@ -26,7 +26,7 @@ export default function SearchPage() {
 
     const handleViewDetails = () => {
         if (currentContact) {
-            navigate(`/contact/${currentContact.itemGUID}`)
+            navigate(`/contact/${currentContact.itemGuid}`)
         }
     }
 

@@ -1,5 +1,6 @@
 import { act, renderHook } from '@testing-library/react'
-import { useContactHistory, type Contact } from '../useContactHistory'
+import { PhysterContact } from '../../../../common/types/PhysterContact'
+import { useContactHistory } from '../useContactHistory'
 
 describe('useContactHistory', () => {
     beforeEach(() => {
@@ -7,13 +8,13 @@ describe('useContactHistory', () => {
         localStorage.clear()
     })
 
-    const createMockContact = (overrides: Partial<Contact> = {}): Contact => ({
-        itemGUID: 'guid-123',
+    const createMockContact = (overrides: Partial<PhysterContact> = {}): PhysterContact => ({
+        itemGuid: 'guid-123',
         fileAs: 'John Doe',
         email1Address: 'john@example.com',
         telephoneNumber1: '123-456-7890',
         lastActivity: new Date().toISOString(),
-        lastUpdated: Date.now(),
+        lastUpdate: Date.now(),
         ...overrides
     })
 
@@ -42,7 +43,7 @@ describe('useContactHistory', () => {
         })
 
         expect(result.current.history).toHaveLength(1)
-        expect(result.current.history[0].itemGUID).toBe('guid-123')
+        expect(result.current.history[0].itemGuid).toBe('guid-123')
         expect(result.current.history[0].fileAs).toBe('John Doe')
     })
 
@@ -64,8 +65,8 @@ describe('useContactHistory', () => {
 
     it('should put updated contact at top of history', () => {
         const { result } = renderHook(() => useContactHistory())
-        const contact1 = createMockContact({ itemGUID: 'guid-1', fileAs: 'John Doe' })
-        const contact2 = createMockContact({ itemGUID: 'guid-2', fileAs: 'Jane Smith' })
+        const contact1 = createMockContact({ itemGuid: 'guid-1', fileAs: 'John Doe' })
+        const contact2 = createMockContact({ itemGuid: 'guid-2', fileAs: 'Jane Smith' })
 
         act(() => {
             result.current.addContact(contact1)
@@ -74,8 +75,8 @@ describe('useContactHistory', () => {
         })
 
         expect(result.current.history).toHaveLength(2)
-        expect(result.current.history[0].itemGUID).toBe('guid-1')
-        expect(result.current.history[1].itemGUID).toBe('guid-2')
+        expect(result.current.history[0].itemGuid).toBe('guid-1')
+        expect(result.current.history[1].itemGuid).toBe('guid-2')
     })
 
     it('should remove contact from history', () => {
@@ -114,10 +115,10 @@ describe('useContactHistory', () => {
         expect(retrieved).toMatchObject({
             fileAs: contact.fileAs,
             email1Address: contact.email1Address,
-            itemGUID: contact.itemGUID,
+            itemGuid: contact.itemGuid,
             telephoneNumber1: contact.telephoneNumber1
         })
-        expect(retrieved?.lastUpdated).toBeDefined()
+        expect(retrieved?.lastUpdate).toBeDefined()
     })
 
     it('should return undefined for non-existent contact', () => {
@@ -128,8 +129,8 @@ describe('useContactHistory', () => {
 
     it('should clear all history', () => {
         const { result } = renderHook(() => useContactHistory())
-        const contact1 = createMockContact({ itemGUID: 'guid-1' })
-        const contact2 = createMockContact({ itemGUID: 'guid-2' })
+        const contact1 = createMockContact({ itemGuid: 'guid-1' })
+        const contact2 = createMockContact({ itemGuid: 'guid-2' })
 
         act(() => {
             result.current.addContact(contact1)
@@ -152,9 +153,9 @@ describe('useContactHistory', () => {
         expect(stored).not.toBeNull()
 
         if (stored && stored !== 'undefined') {
-            const parsedData = JSON.parse(stored) as Contact[]
+            const parsedData = JSON.parse(stored) as PhysterContact[]
             expect(parsedData).toHaveLength(1)
-            expect(parsedData[0].itemGUID).toBe('guid-123')
+            expect(parsedData[0].itemGuid).toBe('guid-123')
         }
     })
 
@@ -194,9 +195,9 @@ describe('useContactHistory', () => {
 
     it('should handle multiple contacts in history', () => {
         const { result } = renderHook(() => useContactHistory())
-        const contact1 = createMockContact({ itemGUID: 'guid-1', fileAs: 'Contact 1' })
-        const contact2 = createMockContact({ itemGUID: 'guid-2', fileAs: 'Contact 2' })
-        const contact3 = createMockContact({ itemGUID: 'guid-3', fileAs: 'Contact 3' })
+        const contact1 = createMockContact({ itemGuid: 'guid-1', fileAs: 'Contact 1' })
+        const contact2 = createMockContact({ itemGuid: 'guid-2', fileAs: 'Contact 2' })
+        const contact3 = createMockContact({ itemGuid: 'guid-3', fileAs: 'Contact 3' })
 
         act(() => {
             result.current.addContact(contact1)
@@ -205,8 +206,8 @@ describe('useContactHistory', () => {
         })
 
         expect(result.current.history).toHaveLength(3)
-        expect(result.current.history[0].itemGUID).toBe('guid-3')
-        expect(result.current.history[1].itemGUID).toBe('guid-2')
-        expect(result.current.history[2].itemGUID).toBe('guid-1')
+        expect(result.current.history[0].itemGuid).toBe('guid-3')
+        expect(result.current.history[1].itemGuid).toBe('guid-2')
+        expect(result.current.history[2].itemGuid).toBe('guid-1')
     })
 })

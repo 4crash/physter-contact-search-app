@@ -9,13 +9,13 @@ export default function HistoryPage() {
     const { history, removeContact, updateContact, clearHistory } = useContactHistory()
     const { mutate: refreshContact, isPending, variables } = useRefreshContact()
 
-    const handleRefreshContact = (email: string, contactId: string) => {
+    const handleRefreshContact = (contactId: string) => {
 
-        refreshContact(email, {
+        refreshContact(contactId, {
 
             onSuccess: (updated) => {
                 if (updated) {
-                    updateContact({ ...updated, itemGUID: contactId })
+                    updateContact({ ...updated, itemGuid: contactId })
                 }
 
             },
@@ -68,7 +68,7 @@ export default function HistoryPage() {
                     {history.map(contact => (
 
                         <div
-                            key={contact.itemGUID}
+                            key={contact.itemGuid}
                             className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition relative"
                         >
                             <div className='flex justify-between mb-4'>
@@ -106,7 +106,7 @@ export default function HistoryPage() {
                             </div>
                             <div className="flex gap-2 w-full absolute bottom-2 ">
                                 <ContactActionButtons
-                                    itemGUID={contact.itemGUID}
+                                    itemGuid={contact.itemGuid}
                                     email={contact.email1Address}
                                     onRefresh={handleRefreshContact}
                                     onRemove={removeContact}

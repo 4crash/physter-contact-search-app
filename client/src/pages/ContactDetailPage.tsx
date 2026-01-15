@@ -13,7 +13,7 @@ export default function ContactDetailPage() {
 
     const handleRefresh = () => {
         if (!contact) return
-        refreshContact(contact.email1Address, {
+        refreshContact(contact.itemGuid, {
             onSuccess: (updated) => {
                 if (updated) {
                     updateContact(updated)
@@ -70,7 +70,7 @@ export default function ContactDetailPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                     <div>
                         <p className="text-slate-600">Contact ID</p>
-                        <p className="font-mono text-slate-900 break-all">{contact.itemGUID}</p>
+                        <p className="font-mono text-slate-900 break-all">{contact.itemGuid}</p>
                     </div>
 
 

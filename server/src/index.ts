@@ -4,7 +4,8 @@ import express from 'express';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import type { PhysterContact } from '../../common/types/contact.js';
+import type { PhysterContact } from '../../common/types/PhysterContact.js';
+
 
 const getDir = () => {
     const __filename = fileURLToPath(import.meta.url);
@@ -40,17 +41,17 @@ app.get('/contacts/search', (req: Request, res: Response) => {
     }
 
     const contacts = getContacts();
-    const contact = contacts.find(c => c.Email1Address?.toLowerCase() === email.toLowerCase());
+    const contact = contacts.find(c => c.email1Address?.toLowerCase() === email.toLowerCase());
 
     if (contact) {
         res.json({
-            Status: 'OK',
-            Data: [contact]
+            status: 'OK',
+            data: [contact]
         });
     } else {
         res.json({
-            Status: 'OK',
-            Data: []
+            status: 'OK',
+            data: []
         });
     }
 });
@@ -59,12 +60,12 @@ app.get('/contacts/search', (req: Request, res: Response) => {
 app.get('/contacts/:guid', (req: Request, res: Response) => {
     const { guid } = req.params;
     const contacts = getContacts();
-    const contact = contacts.find(c => c.ItemGUID === guid);
+    const contact = contacts.find(c => c.itemGuid === guid);
 
     if (contact) {
         res.json({
-            Status: 'OK',
-            Data: [contact]
+            status: 'OK',
+            data: [contact]
         });
     } else {
         res.status(404).json({ status: 'error', message: 'Contact not found' });

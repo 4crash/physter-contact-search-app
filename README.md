@@ -199,7 +199,7 @@ src/
 ```typescript
 interface Contact {
   // Mandatory fields
-  itemGUID: string              // Unique identifier
+  itemGuid: string              // Unique identifier
   fileAs: string                // Display name
   email1Address: string         // Primary email
   telephoneNumber1: string      // Primary phone
@@ -238,7 +238,7 @@ interface Contact {
 - Persists to localStorage with key `'contact_history'`
 - Methods:
   - `addContact(contact)` - Add or update contact
-  - `removeContact(id)` - Remove by itemGUID
+  - `removeContact(id)` - Remove by itemGuid
   - `getContact(id)` - Retrieve specific contact
   - `clearHistory()` - Clear all saved contacts
 
@@ -385,7 +385,7 @@ Tests for React hooks with state and side effects:
 // Mock Contact Factory
 function createMockContact(overrides?: Partial<Contact>): Contact {
     return {
-        itemGUID: 'guid-123',
+        itemGuid: 'guid-123',
         fileAs: 'John Doe',
         email1Address: 'john@example.com',
         telephoneNumber1: '123-456-7890',
