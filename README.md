@@ -55,7 +55,6 @@ A modern React-based contact search application with search functionality, persi
 - **📘 TypeScript 4.9** - Type-safe development
 - **🔄 React Query 5.90** - Server state management & caching
 - **🛣️ React Router 6.20** - Client-side routing
-- **🎭 Fluent UI** - Microsoft's React component library
 
 ### Backend
 - **🟢 Node.js** with ES modules
@@ -203,7 +202,7 @@ npm run lint         # Check code quality
 #### Utils
 - **contactService** - API client and data transformation layer
 
-### Backend API
+### Backend API (Simple backend, created for frontend showcase)
 
 #### Endpoints
 
@@ -235,6 +234,7 @@ npm run lint         # Check code quality
 ## 📊 Data Model
 
 ### PhysterContact Interface
+The API includes extra fields due to legacy requirements or in preparation for future updates.
 ```typescript
 interface PhysterContact {
   // Required fields
@@ -273,7 +273,7 @@ interface PhysterContact {
 
 ### Contact History (Local Storage)
 ```typescript
-interface ContactHistory extends PhysterContact {
+interface PhysterContactHistory extends PhysterContact {
   lastUpdated: number           // Unix timestamp
 }
 ```
@@ -365,13 +365,6 @@ The mock server includes sample contacts with these email addresses:
 - Automatic error handling and retries
 - Type-safe responses with TypeScript
 
-### Future Enhancements
-- [ ] Add pagination for large contact lists
-- [ ] Implement advanced search filters
-- [ ] Add contact creation/editing
-- [ ] Export contacts to CSV
-- [ ] Dark mode support
-- [ ] Real API integration (currently mock server)
 
 ## 📄 License
 
@@ -383,4 +376,3 @@ Created as a sample application for contact management demonstration.
 
 ---
 
-**Happy Coding! 🚀**

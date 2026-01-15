@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react'
-import { PhysterContact } from '../../../../common/types/PhysterContact'
+import { PhysterContactHistory } from '../../types/PhysterContactHistory'
 import { useContactHistory } from '../useContactHistory'
 
 describe('useContactHistory', () => {
@@ -8,13 +8,13 @@ describe('useContactHistory', () => {
         localStorage.clear()
     })
 
-    const createMockContact = (overrides: Partial<PhysterContact> = {}): PhysterContact => ({
+    const createMockContact = (overrides: Partial<PhysterContactHistory> = {}): PhysterContactHistory => ({
         itemGuid: 'guid-123',
         fileAs: 'John Doe',
         email1Address: 'john@example.com',
         telephoneNumber1: '123-456-7890',
         lastActivity: new Date().toISOString(),
-        lastUpdate: Date.now(),
+        lastUpdated: Date.now(),
         ...overrides
     })
 
@@ -118,7 +118,7 @@ describe('useContactHistory', () => {
             itemGuid: contact.itemGuid,
             telephoneNumber1: contact.telephoneNumber1
         })
-        expect(retrieved?.lastUpdate).toBeDefined()
+        expect(retrieved?.lastUpdated).toBeDefined()
     })
 
     it('should return undefined for non-existent contact', () => {
@@ -153,7 +153,7 @@ describe('useContactHistory', () => {
         expect(stored).not.toBeNull()
 
         if (stored && stored !== 'undefined') {
-            const parsedData = JSON.parse(stored) as PhysterContact[]
+            const parsedData = JSON.parse(stored) as PhysterContactHistory[]
             expect(parsedData).toHaveLength(1)
             expect(parsedData[0].itemGuid).toBe('guid-123')
         }
@@ -167,14 +167,14 @@ describe('useContactHistory', () => {
             result.current.addContact(contact)
         })
 
-        const firstTimestamp = result.current.history[0].lastUpdate
+        const firstTimestamp = result.current.history[0].lastUpdated
 
         // Add a small delay and re-add the contact
         act(() => {
             result.current.addContact(contact)
         })
 
-        const secondTimestamp = result.current.history[0].lastUpdate
+        const secondTimestamp = result.current.history[0].lastUpdated
         expect(secondTimestamp).toBeGreaterThanOrEqual(firstTimestamp)
     })
 

@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { PhysterContact } from '../../../common/types/PhysterContact';
+import { PhysterContactHistory } from '../types/PhysterContactHistory';
 
 
 const STORAGE_KEY = 'contact_history'
 
 export function useContactHistory() {
-    const [history, setHistory] = useState<PhysterContact[]>([])
+    const [history, setHistory] = useState<PhysterContactHistory[]>([])
     const [isLoaded, setIsLoaded] = useState(false)
 
     // Load history from localStorage on mount
@@ -13,7 +13,7 @@ export function useContactHistory() {
         const saved = localStorage.getItem(STORAGE_KEY)
         if (saved) {
             try {
-                setHistory(JSON.parse(saved) as PhysterContact[])
+                setHistory(JSON.parse(saved) as PhysterContactHistory[])
             } catch (err) {
                 console.error('Failed to parse contact history:', err)
             }
@@ -28,7 +28,7 @@ export function useContactHistory() {
         }
     }, [history, isLoaded])
 
-    const addContact = (contact: PhysterContact) => {
+    const addContact = (contact: PhysterContactHistory) => {
         setHistory(prev => {
             // Remove if exists to avoid duplicates
             const filtered = prev.filter(c => c.itemGuid !== contact.itemGuid)
@@ -37,7 +37,7 @@ export function useContactHistory() {
         })
     }
 
-    const updateContact = (contact: PhysterContact) => {
+    const updateContact = (contact: PhysterContactHistory) => {
         setHistory(prev =>
             prev.map(c => c.itemGuid === contact.itemGuid ? { ...contact, lastUpdated: Date.now() } : c)
         )

@@ -1,10 +1,14 @@
 import axios from 'axios';
-import { PhysterContact } from '../../../common/types/PhysterContact.js';
+import { PhysterContactHistory } from '../types/PhysterContactHistory.js';
 
 const API_BASE_URL = 'http://localhost:3001';
 
-// Type alias for better readability - PhysterContact IS the Contact type
-export type Contact = PhysterContact;
+// Type alias for better readability - PhysterContactHistory IS the Contact type
+export type Contact = PhysterContactHistory;
+
+function getCurrentUnixTimestamp(): number {
+    return Math.floor(Date.now() / 1000);
+}
 
 /**
  * Search for a contact by email using local Express API
@@ -19,7 +23,10 @@ export async function searchContactByEmail(email: string): Promise<Contact | nul
 
         const searchResult = response.data;
         if (searchResult?.data?.[0]) {
-            return searchResult.data[0];
+            return {
+                ...searchResult.data[0],
+                lastUpdated: getCurrentUnixTimestamp()
+            };
         }
         return null;
     } catch (error) {
@@ -40,7 +47,10 @@ export async function getContactByGuid(guid: string): Promise<Contact | null> {
         const response = await axios.get(`${API_BASE_URL}/contacts/${guid}`);
         const result = response.data;
         if (result?.data?.[0]) {
-            return result.data[0];
+            return {
+                ...result.data[0],
+                lastUpdated: getCurrentUnixTimestamp()
+            };
         }
         return null;
     } catch (error) {

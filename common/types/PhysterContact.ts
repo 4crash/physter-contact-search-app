@@ -7,7 +7,6 @@ export interface PhysterContact {
     telephoneNumber1?: string;
     telephoneNumber2?: string;
     lastActivity: string;
-    lastUpdate: number;
     profilePicture?: string | null;
     profilePictureHeight?: number;
     profilePictureWidth?: number;
