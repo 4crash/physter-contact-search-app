@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API_CONFIG } from '../config/constants';
-import { PhysterContactHistory } from '../types/PhysterContactHistory.js';
+import { PhysterContactHistory } from '../types/PhysterContactHistory';
 
 function getCurrentUnixTimestamp(): number {
     return Math.floor(Date.now() / 1000);
