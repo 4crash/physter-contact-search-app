@@ -62,6 +62,4 @@ export function useContactHistory() {
         clearHistory,
         isLoaded
     }
-}
-
-export default useContactHistory;;
+};

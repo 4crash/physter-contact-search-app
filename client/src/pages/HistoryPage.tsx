@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import ContactActionButtons from '../components/ContactActionButtons'
 import ContactAvatar from '../components/ContactAvatar'
-import useContactHistory from '../hooks/useContactHistory'
+import { useContactHistory } from '../hooks/useContactHistory'
 import { useRefreshContact } from '../hooks/useContactQuery'
 
 export default function HistoryPage() {

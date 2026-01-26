@@ -1,7 +1,7 @@
 import { Link, useParams } from 'react-router-dom'
 import ContactCard from '../components/ContactCard'
 import ContactInformation from '../components/ContactInformation'
-import useContactHistory from '../hooks/useContactHistory'
+import { useContactHistory } from '../hooks/useContactHistory'
 import { useRefreshContact } from '../hooks/useContactQuery'
 
 export default function ContactDetailPage() {

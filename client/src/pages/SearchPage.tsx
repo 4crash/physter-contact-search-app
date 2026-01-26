@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ContactCard from '../components/ContactCard'
 import ContactForm from '../components/ContactForm'
-import useContactHistory from '../hooks/useContactHistory'
+import { useContactHistory } from '../hooks/useContactHistory'
 import { useSearchContact } from '../hooks/useContactQuery'
 
 export default function SearchPage() {
