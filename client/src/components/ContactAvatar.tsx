@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 interface ContactAvatarProps {
     profilePicture?: string | null;
     fileAs: string;
@@ -32,30 +34,47 @@ function ensureDataUrl(picture: string): string {
     return `data:${prefix};base64,${picture}`;
 }
 
+// Get initials from name
+function getInitials(name: string): string {
+    return name.split(' ').filter(Boolean).map(n => n[0].toUpperCase()).join('');
+}
+
 export default function ContactAvatar({ profilePicture, fileAs, className }: ContactAvatarProps) {
-    const hasValidImage = !!profilePicture && isBase64String(profilePicture);
+    const [imageError, setImageError] = useState(false);
+    const [imageLoading, setImageLoading] = useState(true);
+
+    const hasValidImage = !!profilePicture && isBase64String(profilePicture) && !imageError;
     const imageUrl = hasValidImage ? ensureDataUrl(profilePicture!) : '';
 
     return (
         <div className={className}>
-            {
-                hasValidImage ? (
+            {hasValidImage ? (
+                <>
+                    {imageLoading && (
+                        <div className="w-full h-full rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center animate-pulse">
+                            <span className="text-lg font-bold text-white">
+                                {getInitials(fileAs)}
+                            </span>
+                        </div>
+                    )}
                     <img
                         src={imageUrl}
                         alt={fileAs}
-                        className="w-full h-full rounded-full object-cover flex-shrink-0"
-                        onError={(e) => {
-                            (e.target as HTMLImageElement).style.display = 'none';
+                        className={`w-full h-full rounded-full object-cover ${imageLoading ? 'hidden' : ''}`}
+                        onLoad={() => setImageLoading(false)}
+                        onError={() => {
+                            setImageError(true);
+                            setImageLoading(false);
                         }}
                     />
-                ) : (
-
-                    <div className="w-full h-full max-w-24 max-h-24 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center flex-shrink-0">
-                        <span className="text-lg font-bold text-white">
-                            {fileAs.split(' ').filter(Boolean).map(n => n[0].toUpperCase()).join(' ')}
-                        </span>
-                    </div>
-                )}
-        </div >
+                </>
+            ) : (
+                <div className="w-full h-full rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                    <span className="text-lg font-bold text-white">
+                        {getInitials(fileAs)}
+                    </span>
+                </div>
+            )}
+        </div>
     )
 }

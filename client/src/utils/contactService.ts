@@ -1,10 +1,6 @@
 import axios from 'axios';
+import { API_CONFIG } from '../config/constants';
 import { PhysterContactHistory } from '../types/PhysterContactHistory.js';
-
-const API_BASE_URL = 'http://localhost:3001';
-
-// Type alias for better readability - PhysterContactHistory IS the Contact type
-export type Contact = PhysterContactHistory;
 
 function getCurrentUnixTimestamp(): number {
     return Math.floor(Date.now() / 1000);
@@ -13,11 +9,11 @@ function getCurrentUnixTimestamp(): number {
 /**
  * Search for a contact by email using local Express API
  * @param email - Email address to search for
- * @returns Promise with Contact data or null if not found
+ * @returns Promise with PhysterContactHistory data or null if not found
  */
-export async function searchContactByEmail(email: string): Promise<Contact | null> {
+export async function searchContactByEmail(email: string): Promise<PhysterContactHistory | null> {
     try {
-        const response = await axios.get(`${API_BASE_URL}/contacts/search`, {
+        const response = await axios.get(`${API_CONFIG.BASE_URL}/contacts/search`, {
             params: { email }
         });
 
@@ -40,11 +36,11 @@ export async function searchContactByEmail(email: string): Promise<Contact | nul
 /**
  * Get a contact by GUID using local Express API
  * @param guid - Contact GUID
- * @returns Promise with Contact data or null if not found
+ * @returns Promise with PhysterContactHistory data or null if not found
  */
-export async function getContactByGuid(guid: string): Promise<Contact | null> {
+export async function getContactByGuid(guid: string): Promise<PhysterContactHistory | null> {
     try {
-        const response = await axios.get(`${API_BASE_URL}/contacts/${guid}`);
+        const response = await axios.get(`${API_CONFIG.BASE_URL}/contacts/${guid}`);
         const result = response.data;
         if (result?.data?.[0]) {
             return {

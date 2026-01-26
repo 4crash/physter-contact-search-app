@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { CACHE_CONFIG } from '../config/constants'
 import { contactQueries, getContactByGuid, searchContactByEmail } from '../utils/contactService'
 
 /**
@@ -12,10 +13,10 @@ export function useSearchContact(email: string | null, enabled: boolean = true) 
             return searchContactByEmail(email)
         },
         enabled: enabled && !!email,
-        staleTime: 1000 * 60 * 5, // 5 minutes
-        gcTime: 1000 * 60 * 10, // 10 minutes (formerly cacheTime)
-        retry: 1,
-        retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+        staleTime: CACHE_CONFIG.STALE_TIME,
+        gcTime: CACHE_CONFIG.GC_TIME,
+        retry: CACHE_CONFIG.RETRY_COUNT,
+        retryDelay: CACHE_CONFIG.RETRY_DELAY,
     })
 }
 
@@ -44,14 +45,13 @@ export function useRefreshContact() {
         onSuccess: (contact) => {
             if (contact) {
                 // Update the query cache
-
                 queryClient.setQueryData(
                     contactQueries.detail(contact.itemGuid),
                     contact
                 )
             }
         },
-        retry: 1,
+        retry: CACHE_CONFIG.RETRY_COUNT,
     })
 }
 

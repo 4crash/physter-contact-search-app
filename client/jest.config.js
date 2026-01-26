@@ -7,6 +7,8 @@ export default {
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1',
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    '^@/config/constants$': '<rootDir>/src/config/__mocks__/constants.ts',
+    '^.*/config/constants$': '<rootDir>/src/config/__mocks__/constants.ts',
   },
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
   transform: {

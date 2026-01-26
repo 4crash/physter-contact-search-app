@@ -40,7 +40,7 @@ describe('ContactAvatar', () => {
       />
     )
 
-    const initials = screen.getByText(/A\s+J/)
+    const initials = screen.getByText('AJ')
     expect(initials).toBeInTheDocument()
   })
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { PhysterContactHistory } from '../types/PhysterContactHistory';
 
 
@@ -28,32 +28,30 @@ export function useContactHistory() {
         }
     }, [history, isLoaded])
 
-    const addContact = (contact: PhysterContactHistory) => {
+    const addContact = useCallback((contact: PhysterContactHistory) => {
         setHistory(prev => {
-            // Remove if exists to avoid duplicates
             const filtered = prev.filter(c => c.itemGuid !== contact.itemGuid)
-            // Add to top with updated timestamp
             return [{ ...contact, lastUpdated: Date.now() }, ...filtered]
         })
-    }
+    }, []) // ✅ Stable reference
 
-    const updateContact = (contact: PhysterContactHistory) => {
+    const updateContact = useCallback((contact: PhysterContactHistory) => {
         setHistory(prev =>
             prev.map(c => c.itemGuid === contact.itemGuid ? { ...contact, lastUpdated: Date.now() } : c)
         )
-    }
+    }, [])
 
-    const removeContact = (id: string) => {
+    const removeContact = useCallback((id: string) => {
         setHistory(prev => prev.filter(c => c.itemGuid !== id))
-    }
+    }, [])
 
-    const getContact = (id: string) => {
+    const getContact = useCallback((id: string) => {
         return history.find(c => c.itemGuid === id)
-    }
+    }, [history])
 
-    const clearHistory = () => {
+    const clearHistory = useCallback(() => {
         setHistory([])
-    }
+    }, [])
 
     return {
         history,
@@ -66,3 +64,4 @@ export function useContactHistory() {
     }
 }
 
+export default useContactHistory;;

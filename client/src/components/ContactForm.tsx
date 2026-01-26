@@ -31,12 +31,15 @@ export default function ContactForm({ onSearch, loading }: ContactFormProps) {
         <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6">
             <h2 className="text-2xl font-bold text-slate-900 mb-4">Search for a Contact</h2>
 
-            <label className="block text-sm font-medium text-slate-700 mb-2">
+            <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
                 Enter Contact Email
             </label>
             <div className="flex flex-col sm:flex-row gap-2">
                 <input
+                    id="email"
                     type="email"
+                    aria-describedby={emailError ? "email-error" : undefined}
+                    aria-invalid={!!emailError}
                     value={email}
                     onChange={(e) => {
                         setEmail(e.target.value)
@@ -45,6 +48,9 @@ export default function ContactForm({ onSearch, loading }: ContactFormProps) {
                     placeholder="ealbares@gmail.com"
                     className="flex-1 px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-slate-100"
                     disabled={loading}
+                    autoComplete='email'
+
+
                 />
                 <button
                     type="submit"
@@ -56,7 +62,7 @@ export default function ContactForm({ onSearch, loading }: ContactFormProps) {
             </div>
 
             {emailError && (
-                <p className="text-red-600 text-sm mt-2">{emailError}</p>
+                <p id="email-error" role="alert" className="text-red-600 text-sm mt-2">{emailError}</p>
             )}
         </form>
     )

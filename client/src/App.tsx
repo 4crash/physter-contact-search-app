@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import Layout from './components/Layout'
+import { CACHE_CONFIG } from './config/constants'
 import './index.css'
 import ContactDetailPage from './pages/ContactDetailPage'
 import HistoryPage from './pages/HistoryPage'
@@ -10,9 +11,9 @@ import SearchPage from './pages/SearchPage'
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
-            staleTime: 1000 * 60 * 5, // 5 minutes
-            gcTime: 1000 * 60 * 10, // 10 minutes
-            retry: 1,
+            staleTime: CACHE_CONFIG.STALE_TIME,
+            gcTime: CACHE_CONFIG.GC_TIME,
+            retry: CACHE_CONFIG.RETRY_COUNT,
         },
     },
 })

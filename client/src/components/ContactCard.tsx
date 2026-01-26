@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { PhysterContact } from '../../../common/types/PhysterContact';
 import ContactAvatar from './ContactAvatar';
 
@@ -6,7 +7,7 @@ interface ContactCardProps {
 }
 
 export default function ContactCard({ contact }: ContactCardProps) {
-    const getAddress = () => {
+    const address = useMemo(() => {
         const parts = []
         if (contact.businessAddressStreet) parts.push(contact.businessAddressStreet)
         if (contact.businessAddressCity) parts.push(contact.businessAddressCity)
@@ -21,7 +22,16 @@ export default function ContactCard({ contact }: ContactCardProps) {
         }
 
         return parts.join(', ')
-    }
+    }, [
+        contact.businessAddressStreet,
+        contact.businessAddressCity,
+        contact.businessAddressState,
+        contact.businessAddressPostalCode,
+        contact.homeAddressStreet,
+        contact.homeAddressCity,
+        contact.homeAddressState,
+        contact.homeAddressPostalCode
+    ])
 
     return (
         <div className="bg-white rounded-lg shadow-md p-8">
@@ -61,10 +71,10 @@ export default function ContactCard({ contact }: ContactCardProps) {
                                     </div>
                                 )}
 
-                                {getAddress() && (
+                                {address && (
                                     <div>
                                         <span className="font-medium text-slate-900">Address:</span>
-                                        <p className="text-slate-600">{getAddress()}</p>
+                                        <p className="text-slate-600">{address}</p>
                                     </div>
                                 )}
 

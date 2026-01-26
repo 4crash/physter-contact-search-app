@@ -1,14 +1,13 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ContactCard from '../components/ContactCard'
 import ContactForm from '../components/ContactForm'
-import { useContactHistory } from '../hooks/useContactHistory'
+import useContactHistory from '../hooks/useContactHistory'
 import { useSearchContact } from '../hooks/useContactQuery'
 
 export default function SearchPage() {
     const navigate = useNavigate()
     const { addContact } = useContactHistory()
-    const addContactRef = useRef(addContact)
 
     const [searchEmail, setSearchEmail] = useState<string | null>(null)
     const { data: currentContact, isLoading, error } = useSearchContact(searchEmail, !!searchEmail)
@@ -16,9 +15,9 @@ export default function SearchPage() {
     // Auto-add contact to history when successfully loaded
     useEffect(() => {
         if (currentContact && !error && !isLoading) {
-            addContactRef.current(currentContact);
+            addContact(currentContact);
         }
-    }, [currentContact, error, isLoading])
+    }, [currentContact, error, isLoading, addContact])
 
     const handleSearch = (email: string) => {
         setSearchEmail(email)
@@ -49,9 +48,10 @@ export default function SearchPage() {
                             <h3 className="text-red-900 font-medium mb-1">Error</h3>
                             <p className="text-red-800">{errorMessage}</p>
                         </div>
+
                     )}
 
-                    {notFoundMessage && (
+                    {!errorMessage && notFoundMessage && (
                         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                             <h3 className="text-yellow-900 font-medium mb-1">Not Found</h3>
                             <p className="text-yellow-800">{notFoundMessage}</p>
