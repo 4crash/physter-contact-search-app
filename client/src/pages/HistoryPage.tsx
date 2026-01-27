@@ -101,7 +101,7 @@ export default function HistoryPage() {
                                     </p>
                                 </div>
                                 <div className='flex  '>
-                                    <ContactAvatar profilePicture={contact.profilePicture} fileAs={contact.fileAs} className="w-16 h-16 flex-shrink-0" />
+                                    <ContactAvatar profilePicture={contact.profilePicture} fileAs={contact.fileAs} className="w-16 h-16 shrink-0" />
                                 </div>
                             </div>
                             <div className="flex gap-2 w-full absolute bottom-2 ">
