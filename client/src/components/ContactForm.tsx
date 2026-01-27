@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { validateEmail } from '../utils/contactService';
 
 interface ContactFormProps {
@@ -10,7 +10,7 @@ export default function ContactForm({ onSearch, loading }: ContactFormProps) {
     const [email, setEmail] = useState('')
     const [emailError, setEmailError] = useState('')
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = (e: FormEvent) => {
         e.preventDefault()
 
         if (!email.trim()) {
