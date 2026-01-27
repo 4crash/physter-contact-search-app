@@ -23,6 +23,13 @@ export default function SearchPage() {
         setSearchEmail(email)
     }
 
+    const handleRetry = () => {
+        if (searchEmail) {
+            setSearchEmail(null)
+            setTimeout(() => setSearchEmail(searchEmail), 0)
+        }
+    }
+
     const handleViewDetails = () => {
         if (currentContact) {
             navigate(`/contact/${currentContact.itemGuid}`)
@@ -44,17 +51,26 @@ export default function SearchPage() {
                     <ContactForm onSearch={handleSearch} loading={isLoading} />
 
                     {errorMessage && (
-                        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                            <h3 className="text-red-900 font-medium mb-1">Error</h3>
-                            <p className="text-red-800">{errorMessage}</p>
-                        </div>
-
-                    )}
-
-                    {!errorMessage && notFoundMessage && (
-                        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                            <h3 className="text-yellow-900 font-medium mb-1">Not Found</h3>
-                            <p className="text-yellow-800">{notFoundMessage}</p>
+                        <div className="space-y-4 ">
+                            <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex gap-4">
+                                <div className='flex-1 mb-4 '>
+                                    <h3 className="text-red-900 font-medium mb-2">Error:</h3>
+                                    <p className="text-red-800 mb-1">{errorMessage}</p>
+                                </div>
+                                <div className="flex-1 justify-end text-right">
+                                    <button
+                                        onClick={handleRetry}
+                                        disabled={isLoading}
+                                        className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:bg-slate-400 transition font-medium text-sm"
+                                    >
+                                        {isLoading ? 'Retrying...' : 'Retry'}
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                                <h3 className="text-yellow-900 font-medium mb-2">Not Found:</h3>
+                                <p className="text-yellow-800 mb-1">{notFoundMessage}</p>
+                            </div>
                         </div>
                     )}
 
