@@ -46,7 +46,7 @@ export default function HistoryPage() {
                 {history.length > 0 && (
                     <button
                         onClick={handleClearHistory}
-                        className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium"
+                        className="btn-danger"
                     >
                         Clear History
                     </button>
@@ -58,7 +58,7 @@ export default function HistoryPage() {
                     <p className="text-slate-600 mb-4">No contacts in history yet</p>
                     <button
                         onClick={() => navigate('/')}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                        className="btn-primary"
                     >
                         Start Searching
                     </button>

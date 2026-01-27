@@ -55,7 +55,7 @@ export default function ContactForm({ onSearch, loading }: ContactFormProps) {
                 <button
                     type="submit"
                     disabled={loading}
-                    className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-slate-400 transition font-medium"
+                    className="btn-primary btn-medium sm:w-auto"
                 >
                     {loading ? 'Searching...' : 'Search'}
                 </button>

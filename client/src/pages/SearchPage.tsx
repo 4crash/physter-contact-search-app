@@ -61,7 +61,7 @@ export default function SearchPage() {
                                     <button
                                         onClick={handleRetry}
                                         disabled={isLoading}
-                                        className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:bg-slate-400 transition font-medium text-sm"
+                                        className="btn-danger btn-medium"
                                     >
                                         {isLoading ? 'Retrying...' : 'Retry'}
                                     </button>
@@ -79,7 +79,7 @@ export default function SearchPage() {
                             <ContactCard contact={currentContact} />
                             <button
                                 onClick={handleViewDetails}
-                                className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium"
+                                className="btn-primary btn-medium"
                             >
                                 View Full Details
                             </button>

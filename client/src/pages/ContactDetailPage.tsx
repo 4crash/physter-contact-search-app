@@ -58,7 +58,7 @@ export default function ContactDetailPage() {
                 <button
                     onClick={handleRefresh}
                     disabled={refreshing}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-slate-400 transition font-medium"
+                    className="btn-primary btn-medium"
                 >
                     {refreshing ? 'Refreshing...' : 'Refresh Data'}
                 </button>

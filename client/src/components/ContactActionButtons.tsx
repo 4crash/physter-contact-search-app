@@ -21,7 +21,7 @@ export default function ContactActionButtons({
         <>
             <button
                 onClick={() => navigate(`/contact/${itemGuid}`)}
-                className="flex-1 px-3 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition font-medium max-w-[28%]"
+                className="btn-primary btn-medium"
                 aria-label={`View details for ${email}`}
             >
                 View
@@ -29,14 +29,14 @@ export default function ContactActionButtons({
             <button
                 onClick={() => onRefresh(itemGuid)}
                 disabled={isRefreshing}
-                className="flex-1 px-3 py-2 bg-slate-200 text-slate-900 text-sm rounded-lg hover:bg-slate-300 disabled:bg-slate-100 transition font-medium max-w-[28%]"
+                className="btn-secondary "
                 aria-label={`Refresh contact data for ${email}`}
             >
                 {isRefreshing ? 'Refreshing...' : 'Refresh'}
             </button>
             <button
                 onClick={() => onRemove(itemGuid)}
-                className="flex-1 px-3 py-2 bg-red-100 text-red-600 text-sm rounded-lg hover:bg-red-200 transition font-medium max-w-[28%]"
+                className="btn-danger btn-medium"
                 aria-label={`Remove ${email} from history`}
             >
                 Remove
