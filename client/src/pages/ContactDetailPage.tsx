@@ -34,7 +34,7 @@ export default function ContactDetailPage() {
                 </Link>
                 <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
                     <h2 className="text-red-900 font-bold text-lg mb-2">Contact Not Found</h2>
-                    <p className="text-red-800 mb-4">The contact you're looking for is not available.</p>
+                    <p className="text-red-800 mb-4">The contact you&apos;re looking for is not available.</p>
                     <Link
                         to='/'
                         className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
