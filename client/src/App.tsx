@@ -21,7 +21,7 @@ const queryClient = new QueryClient({
 function App() {
     return (
         <QueryClientProvider client={queryClient}>
-            <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+            <Router>
                 <Routes>
                     <Route element={<Layout />}>
                         <Route path="/" element={<SearchPage />} />

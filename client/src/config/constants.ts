@@ -7,7 +7,7 @@
 // This helper safely accesses the environment variable
 const getApiBaseUrl = (): string => {
     try {
-        // @ts-expect-error - import.meta.env is available in Vite but not in Jest
+        //ts-expect-error - import.meta.env is available in Vite but not in Jest
         return import.meta.env?.VITE_API_BASE_URL || 'http://localhost:3001';
     } catch {
         return 'http://localhost:3001';

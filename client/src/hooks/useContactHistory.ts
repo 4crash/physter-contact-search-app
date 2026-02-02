@@ -31,6 +31,9 @@ export function useContactHistory() {
     const addContact = useCallback((contact: PhysterContactHistory) => {
         setHistory(prev => {
             const filtered = prev.filter(c => c.itemGuid !== contact.itemGuid)
+            if (filtered.length >= 100) {
+                filtered.shift() // Remove oldest if at max capacity
+            }
             return [{ ...contact, lastUpdated: Date.now() }, ...filtered]
         })
     }, []) // ✅ Stable reference
