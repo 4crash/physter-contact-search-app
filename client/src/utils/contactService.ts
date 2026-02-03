@@ -72,6 +72,6 @@ export function validateEmail(email: string): boolean {
  */
 export const contactQueries = {
     all: () => ['contacts'] as const,
-    search: (email: string) => [...contactQueries.all(), 'search', email] as const,
-    detail: (id: string) => [...contactQueries.all(), 'detail', id] as const,
+    search: (email: string | null) => [...contactQueries.all(), 'search', email] as const,
+    detail: (id: string | null) => [...contactQueries.all(), 'detail', id] as const,
 }

@@ -7,7 +7,7 @@ import { contactQueries, getContactByGuid, searchContactByEmail } from '../utils
  */
 export function useSearchContact(email: string | null, enabled: boolean = true) {
     return useQuery({
-        queryKey: email ? contactQueries.search(email) : ['contacts', 'search', null],
+        queryKey: contactQueries.search(email),
         queryFn: () => {
             if (!email) return null
             return searchContactByEmail(email)
@@ -25,7 +25,7 @@ export function useSearchContact(email: string | null, enabled: boolean = true) 
  */
 export function useGetContact(id: string | null) {
     return useQuery({
-        queryKey: id ? contactQueries.detail(id) : ['contacts', 'detail', null],
+        queryKey: contactQueries.detail(id),
         queryFn: () => {
             if (!id) return null
             return getContactByGuid(id)
@@ -67,3 +67,5 @@ export function useInvalidateContacts() {
         invalidateDetail: (id: string) => queryClient.invalidateQueries({ queryKey: contactQueries.detail(id) }),
     }
 }
+
+
