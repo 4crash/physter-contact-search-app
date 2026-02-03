@@ -10,7 +10,7 @@ export default function SearchPage() {
     const { addContact } = useContactHistory()
 
     const [searchEmail, setSearchEmail] = useState<string | null>(null)
-    const { data: currentContact, isLoading, error } = useSearchContact(searchEmail, !!searchEmail)
+    const { data: currentContact, isLoading, error } = useSearchContact(searchEmail)
 
     // Auto-add contact to history when successfully loaded
     useEffect(() => {

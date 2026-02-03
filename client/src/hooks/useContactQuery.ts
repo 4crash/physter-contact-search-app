@@ -5,14 +5,14 @@ import { contactQueries, getContactByGuid, searchContactByEmail } from '../utils
 /**
  * Hook to search for a contact by email
  */
-export function useSearchContact(email: string | null, enabled: boolean = true) {
+export function useSearchContact(email: string | null) {
     return useQuery({
         queryKey: contactQueries.search(email),
         queryFn: () => {
             if (!email) return null
             return searchContactByEmail(email)
         },
-        enabled: enabled && !!email,
+        enabled: !!email,
         staleTime: CACHE_CONFIG.STALE_TIME,
         gcTime: CACHE_CONFIG.GC_TIME,
         retry: CACHE_CONFIG.RETRY_COUNT,

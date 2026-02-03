@@ -14,6 +14,7 @@ const queryClient = new QueryClient({
             staleTime: CACHE_CONFIG.STALE_TIME,
             gcTime: CACHE_CONFIG.GC_TIME,
             retry: CACHE_CONFIG.RETRY_COUNT,
+            retryDelay: CACHE_CONFIG.RETRY_DELAY,
         },
     },
 })
